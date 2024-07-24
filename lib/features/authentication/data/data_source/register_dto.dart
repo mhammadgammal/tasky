@@ -1,7 +1,7 @@
 class RegisterDto {
   late String name;
   late String yearsOfExperience;
-  late ExperieceLevel level;
+  late ExperienceLevel level;
   late String address;
   late String phoneNumber;
 
@@ -31,7 +31,7 @@ class RegisterDto {
   }
 }
 
-enum ExperieceLevel {
+enum ExperienceLevel {
   //fresh , junior , midLevel , senior
   fresh,
   junior,
