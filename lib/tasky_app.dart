@@ -13,7 +13,8 @@ class TaskyApp extends StatelessWidget {
       initialRoute: RouterHepler.boarding,
       routes: AppRouter.generateRoutes,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
     );

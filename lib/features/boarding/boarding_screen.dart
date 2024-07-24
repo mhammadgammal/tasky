@@ -11,10 +11,14 @@ class BoardingScreen extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: [
-        SizedBox(
-            height: 550,
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: 10.0),
+          child: Image.asset(
+            AppImages.boarding,
+            height: 550.0,
             width: ScreenUtil.getScreenWidth(context),
-            child: Image.asset(AppImages.boarding)),
+          ),
+        ),
         const Text(
           'Task Management &\nTo-Do List',
           style: AppTextStyle.font30BlackBoldBody,
@@ -38,7 +42,8 @@ class BoardingScreen extends StatelessWidget {
           child: ElevatedButton(
               onPressed: () {},
               style: ButtonStyle(
-                backgroundColor: const WidgetStatePropertyAll(Color(0xFF5F33E1)),
+                backgroundColor:
+                    const WidgetStatePropertyAll(Color(0xFF5F33E1)),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
