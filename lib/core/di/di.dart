@@ -26,7 +26,6 @@ Future<void> init() async {
   sl.registerLazySingleton<Dio>(() => Dio());
   sl.registerLazySingleton<DioHelper>(() => DioHelper(
         sl<Dio>(),
-        sl<CacheHelper>(),
       ));
   // #endregion
 

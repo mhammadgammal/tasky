@@ -11,4 +11,6 @@ class ApiEndPoints {
   static const profile = 'profile';
 
   static const logout = 'auth/logout';
+
+  static var refreshToken = 'auth/refresh-token';
 }

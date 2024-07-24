@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
-import '../../cache/cache_helper.dart';
+import 'package:tasky/core/utils/api_utils/token_util.dart';
 import 'api_end_points.dart';
 
 class DioHelper {
   final Dio _dio;
-  final CacheHelper _sharedPreferences;
 
-  DioHelper(this._dio, this._sharedPreferences) {
+  DioHelper(this._dio) {
     _init();
   }
 
@@ -17,7 +16,7 @@ class DioHelper {
       ..options.headers = {
         "Content-Type": "application/json",
         "lang": "en",
-        'Authorization': ''
+        'Authorization': TokenUtil.getToken()
       };
   }
 
