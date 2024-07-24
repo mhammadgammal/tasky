@@ -15,8 +15,7 @@ class DioHelper {
       ..options.baseUrl = ApiEndPoints.baseUrl
       ..options.headers = {
         "Content-Type": "application/json",
-        "lang": "en",
-        'Authorization': TokenUtil.getToken()
+        'Authorization': 'Bearer ${TokenUtil.getToken()}'
       };
   }
 
