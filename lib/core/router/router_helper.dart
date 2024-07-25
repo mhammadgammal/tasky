@@ -1,3 +1,9 @@
-abstract class RouterHepler {
-  static const String boarding = '/boarding'; 
+abstract class RouterHelper {
+  static const String boarding = '/boarding';
+
+  static const String login = '/login';
+
+  static const String register = '/register';
+
+  static const String home = '/home';
 }
