@@ -33,6 +33,11 @@ final class AppTextStyle {
     fontWeight: FontWeight.normal,
     color: Colors.black,
   );
+  static const font30BlackWBody = TextStyle(
+    fontSize: 30.0,
+    fontWeight: FontWeight.w600,
+    color: Colors.black,
+  );
 
   static const font16BlackNormal = TextStyle(
       color: Colors.black, fontWeight: FontWeight.normal, fontSize: 16.0);
