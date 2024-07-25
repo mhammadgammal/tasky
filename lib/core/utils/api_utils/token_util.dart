@@ -13,7 +13,7 @@ abstract class TokenUtil {
     var refreshToken =
         sl<CacheHelper>().getString(key: CacheKeys.refreshToken) ?? '';
 
-    if (accessToken.isNotEmpty && await _isTokenExpired(accessToken)) {
+    if (refreshToken.isNotEmpty && await _isTokenExpired(accessToken)) {
       var response = await performRefreshToken(refreshToken);
       sl<CacheHelper>().putString(
           key: CacheKeys.token, value: response.data['access_token']);

@@ -7,13 +7,24 @@ class LoginParameter extends BaseParameter{
 }
 
 class RegisterParameter extends BaseParameter{
-  get name => null;
+  late String name;
 
-  get yearsOfExperience => null;
+  late String yearsOfExperience;
 
-  get level => null;
+  late String level;
 
-  get address => null;
+  late String address;
 
-  get phoneNumber => null;
+  late String phoneNumber;
+
+  late String password;
+
+  RegisterParameter(
+      this.name,
+      this.level,
+      this.address,
+      this.password,
+      this.phoneNumber,
+      this.yearsOfExperience,
+      );
 }

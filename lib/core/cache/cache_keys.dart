@@ -7,4 +7,6 @@ abstract class CacheKeys {
   static const refreshToken = 'REFRESH_TOKEN';
 
   static const isBoarding = 'IS_BOARDING';
+
+  static const firstTime = 'FIRST_TIME';
 }

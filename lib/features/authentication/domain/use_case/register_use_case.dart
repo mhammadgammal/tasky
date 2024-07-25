@@ -17,5 +17,6 @@ class RegisterUseCase
           yearsOfExperience: parameter.yearsOfExperience,
           level: parameter.level,
           address: parameter.address,
-          phoneNumber: parameter.phoneNumber));
+          phoneNumber: parameter.phoneNumber,
+      password: parameter.password));
 }
