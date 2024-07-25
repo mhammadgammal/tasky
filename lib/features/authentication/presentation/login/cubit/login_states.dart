@@ -12,6 +12,6 @@ final class LoginPasswordVisibilityState extends LoginStates {}
 final class LoginSuccessState extends LoginStates {}
 
 final class LoginFailureState extends LoginStates {
-  String message;
+  final String message;
   LoginFailureState({required this.message});
 }

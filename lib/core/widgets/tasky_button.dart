@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/core/utils/screen_utils/screen_util.dart';
 
 class TaskyButton extends StatelessWidget {

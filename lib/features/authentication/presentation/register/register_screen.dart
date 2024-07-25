@@ -7,7 +7,6 @@ import 'package:tasky/core/widgets/default_form_field.dart';
 import 'package:tasky/core/widgets/phone_number_input_widget.dart';
 import 'package:tasky/core/widgets/tasky_button.dart';
 import 'package:tasky/features/authentication/presentation/register/cubit/register_cubit.dart';
-import 'package:tasky/features/authentication/presentation/register/widgets/custom_curve_widget.dart';
 
 import '../../../../core/router/app_navigator.dart';
 import '../../../../core/theme/app_color.dart';
