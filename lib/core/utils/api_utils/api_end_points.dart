@@ -13,4 +13,6 @@ class ApiEndPoints {
   static const logout = 'auth/logout';
 
   static var refreshToken = 'auth/refresh-token';
+
+  static var todos = 'todos';
 }
