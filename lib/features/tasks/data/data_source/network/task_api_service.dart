@@ -27,7 +27,7 @@ class TaskApiService implements TaskApiServiceI {
       sl<DioHelper>().delete(url: '${ApiEndPoints.todos}/$taskId');
 
   @override
-  Future<Response> editTask(TaskDto task) => sl<DioHelper>().put(url: '${ApiEndPoints.todos}/${task.id}');
+  Future<Response> editTask(TaskDto task) => sl<DioHelper>().put(url: '${ApiEndPoints.todos}/${task.taskId}');
 
   @override
   Future<Response> getAllTasks() => sl<DioHelper>().get(url: ApiEndPoints.todos);

@@ -1,4 +1,4 @@
-class TaskDto {
+class TaskModel {
   late String taskId;
   late String imagePath;
   late String title;
@@ -9,18 +9,18 @@ class TaskDto {
   late String timeStampCreatedAt;
   late String timeStampUpdatedAt;
 
-  TaskDto(
+  TaskModel(
       {required this.taskId,
-        required this.title,
-        required this.description,
-        required this.imagePath,
-        required this.priority,
-        required this.status,
-        required this.userId,
-        required this.timeStampCreatedAt,
-        required this.timeStampUpdatedAt});
+      required this.title,
+      required this.description,
+      required this.imagePath,
+      required this.priority,
+      required this.status,
+      required this.userId,
+      required this.timeStampCreatedAt,
+      required this.timeStampUpdatedAt});
 
-  factory TaskDto.fromJson(Map<String, dynamic> json) => TaskDto(
+  factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
       taskId: json['_id'],
       title: json['title'],
       description: json['desc'],
