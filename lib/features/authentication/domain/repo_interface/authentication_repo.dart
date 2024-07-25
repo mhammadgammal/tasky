@@ -5,4 +5,5 @@ abstract interface class AuthenticationRepo{
 
   Future<ApiResponse> login(String email, String password);
   Future<ApiResponse> register(RegisterDto registerDto);
+  Future<bool> logout();
 }
