@@ -9,13 +9,12 @@ class DioHelper {
     _init();
   }
 
-  void _init() {
-    print('creating: ${_dio.hashCode}');
+  void _init() async{
     _dio
       ..options.baseUrl = ApiEndPoints.baseUrl
       ..options.headers = {
         "Content-Type": "application/json",
-        'Authorization': 'Bearer ${TokenUtil.getToken()}'
+        "Authorization": "Bearer ${await TokenUtil.getToken()}"
       };
   }
 
