@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio/src/response.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -12,6 +11,7 @@ import 'package:tasky/core/widgets/session_ended_dialogue.dart';
 
 import '../../di/di.dart';
 
+///remember to add await keyword
 abstract class TokenUtil {
   static Future<String> getToken() async {
     var accessToken = sl<CacheHelper>().getString(key: CacheKeys.token) ?? '';
