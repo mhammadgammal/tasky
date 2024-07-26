@@ -31,7 +31,7 @@ class TasksRepositoryImpl implements TasksRepository {
     } on DioException catch (e) {
       print(
           'Error adding task with code ${e.response?.statusCode}: ${e.message}');
-      return ApiResponse.withError(e);
+      return ApiResponse.withError(e.response?.statusCode);
     }
   }
 
@@ -43,7 +43,7 @@ class TasksRepositoryImpl implements TasksRepository {
     } on DioException catch (e) {
       print(
           'Error deleting task with code ${e.response?.statusCode}: ${e.message}');
-      return ApiResponse.withError(e);
+      return ApiResponse.withError(e.response?.statusCode);
     }
   }
 
@@ -65,7 +65,7 @@ class TasksRepositoryImpl implements TasksRepository {
     } on DioException catch (e) {
       print(
           'Error updating task with code ${e.response?.statusCode}: ${e.message}');
-      return ApiResponse.withError(e);
+      return ApiResponse.withError(e.response?.statusCode);
     }
   }
 
@@ -78,7 +78,7 @@ class TasksRepositoryImpl implements TasksRepository {
     } on DioException catch (e) {
       print(
           'Error updating task with code ${e.response?.statusCode}: ${e.message}');
-      return ApiResponse.withError(e);
+      return ApiResponse.withError(e.response?.statusCode);
     }
   }
 
@@ -90,7 +90,7 @@ class TasksRepositoryImpl implements TasksRepository {
     } on DioException catch (e) {
       print(
           'Error updating task with code ${e.response?.statusCode}: ${e.message}');
-      return ApiResponse.withError(e);
+      return ApiResponse.withError(e.response?.statusCode);
     }
   }
 }
