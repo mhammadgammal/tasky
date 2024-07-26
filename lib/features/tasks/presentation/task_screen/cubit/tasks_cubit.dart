@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_all_tasks_use_case.dart';
 
@@ -27,32 +26,6 @@ class TasksCubit extends Cubit<TasksState> {
       if (errorCode == 401) {
       } else if (errorCode == 403) {}
     });
-  }
-
-  (Color, Color) getStatusColors(int index) {
-    switch (tasks[index].status) {
-      case 'waiting':
-        return (AppColor.redOrange, AppColor.veryLightPink);
-      case 'In Progress':
-        return (AppColor.mainColor, AppColor.paleLavender);
-      case 'finished':
-        return (AppColor.babyBlue, AppColor.lightBlue);
-      default:
-        return (Colors.white, Colors.white);
-    }
-  }
-
-  Color getPrioritiesColors(int index) {
-    switch (tasks[index].priority) {
-      case 'high':
-        return AppColor.redOrange;
-      case 'medium':
-        return AppColor.mainColor;
-      case 'low':
-        return AppColor.lightBlue;
-      default:
-        return Colors.white;
-    }
   }
 
   void onTaskTypeSelected(bool isSelected, int selectedIndex) {

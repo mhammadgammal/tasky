@@ -11,4 +11,30 @@ class AppColor {
   static const babyBlue = Color(0xFFe3f2ff);
   static const lightBlue = Color(0xFF0087ff);
   static const secondaryColor = Color(0xFFebe5ff);
+
+  static (Color, Color) getStatusColors(String status) {
+    switch (status) {
+      case 'waiting':
+        return (AppColor.redOrange, AppColor.veryLightPink);
+      case 'In Progress':
+        return (AppColor.mainColor, AppColor.paleLavender);
+      case 'finished':
+        return (AppColor.babyBlue, AppColor.lightBlue);
+      default:
+        return (Colors.white, Colors.white);
+    }
+  }
+
+  static Color getPrioritiesColors(String priority) {
+    switch (priority) {
+      case 'high':
+        return AppColor.redOrange;
+      case 'medium':
+        return AppColor.mainColor;
+      case 'low':
+        return AppColor.lightBlue;
+      default:
+        return Colors.white;
+    }
+  }
 }

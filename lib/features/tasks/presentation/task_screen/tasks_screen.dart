@@ -66,8 +66,10 @@ class TasksScreen extends StatelessWidget {
                     itemCount: cubit.tasks.length,
                     itemBuilder: (context, index) => TaskItem(
                         task: cubit.tasks[index],
-                        statusColors: cubit.getStatusColors(index),
-                        priorityColor: cubit.getPrioritiesColors(index)),
+                        statusColors:
+                            AppColor.getStatusColors(cubit.tasks[index].status),
+                        priorityColor: AppColor.getPrioritiesColors(
+                            cubit.tasks[index].priority)),
                   ),
                 ),
               ],
