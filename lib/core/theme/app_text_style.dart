@@ -41,6 +41,12 @@ final class AppTextStyle {
 
   static const font16BlackNormal = TextStyle(
       color: Colors.black, fontWeight: FontWeight.normal, fontSize: 16.0);
+  static const font18BlackBold = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 18.0,
+    overflow: TextOverflow.ellipsis,
+  );
   static const font35BlackBold = TextStyle(
     fontSize: 35.0,
     fontWeight: FontWeight.bold,
@@ -56,6 +62,7 @@ final class AppTextStyle {
       color: Colors.black, fontWeight: FontWeight.normal, fontSize: 17.0);
   static const font17BlackBold = TextStyle(
       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17.0);
+
   // static const font30WhiteBoldBody
   // static const discount = TextStyle(
   //     color: Colors.green, fontWeight: FontWeight.w200, fontSize: 14.0);

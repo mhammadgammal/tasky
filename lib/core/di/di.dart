@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky/app_context.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/utils/api_utils/dio_helper.dart';
 import 'package:tasky/features/authentication/domain/use_case/login_use_case.dart';
@@ -18,6 +18,7 @@ final sl = GetIt.instance;
 Future<void> init() async {
   print('Service Locator is Running');
 
+  sl.registerLazySingleton<AppContext>(() => AppContext());
   // #region SharedPreferences
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
@@ -50,8 +51,4 @@ Future<void> init() async {
       () => TasksRepositoryImpl(sl.get()));
   sl.registerLazySingleton<GetAllTasksUseCase>(() => GetAllTasksUseCase(sl.get()));
   // #endregion
-}
-
-void registerContext(BuildContext context) {
-  sl.registerSingleton<BuildContext>(context);
 }

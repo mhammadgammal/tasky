@@ -4,6 +4,7 @@ import 'package:tasky/core/router/app_router.dart';
 import 'package:tasky/core/router/router_helper.dart';
 import 'package:tasky/core/theme/app_theme.dart';
 
+import 'app_context.dart';
 import 'core/cache/cache_helper.dart';
 import 'core/di/di.dart';
 
@@ -14,7 +15,6 @@ class TaskyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // String? refreshToken =
     //     sl<CacheHelper>().getString(key: CacheKeys.refreshToken);
-    registerContext(context);
     bool firstTime =
         sl<CacheHelper>().getBool(key: CacheKeys.firstTime) ?? true;
     print('firstTime: $firstTime');
@@ -22,6 +22,7 @@ class TaskyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tasky',
       initialRoute: firstTime ? RouterHelper.boarding : RouterHelper.login,
+      navigatorKey: sl<AppContext>().navigatorKey,
       routes: AppRouter.generateRoutes,
       theme: AppTheme.lightTheme,
     );
