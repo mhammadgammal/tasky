@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
@@ -49,4 +50,8 @@ Future<void> init() async {
       () => TasksRepositoryImpl(sl.get()));
   sl.registerLazySingleton<GetAllTasksUseCase>(() => GetAllTasksUseCase(sl.get()));
   // #endregion
+}
+
+void registerContext(BuildContext context) {
+  sl.registerSingleton<BuildContext>(context);
 }

@@ -14,6 +14,7 @@ class TaskyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // String? refreshToken =
     //     sl<CacheHelper>().getString(key: CacheKeys.refreshToken);
+    registerContext(context);
     bool firstTime =
         sl<CacheHelper>().getBool(key: CacheKeys.firstTime) ?? true;
     print('firstTime: $firstTime');
