@@ -7,8 +7,8 @@ import 'package:tasky/features/authentication/presentation/login/login_screen.da
 import 'package:tasky/features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'package:tasky/features/authentication/presentation/register/register_screen.dart';
 import 'package:tasky/features/boarding/boarding_screen.dart';
-import 'package:tasky/features/tasks/presentation/task_screen/cubit/tasks_cubit.dart';
-import 'package:tasky/features/tasks/presentation/task_screen/tasks_screen.dart';
+import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
+import 'package:tasky/features/tasks/presentation/screens/task_screen/tasks_screen.dart';
 
 class AppRouter {
   static final Map<String, WidgetBuilder> generateRoutes = {

@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
-import 'package:tasky/features/tasks/presentation/task_screen/cubit/tasks_cubit.dart';
-import 'package:tasky/features/tasks/presentation/task_screen/widgets/tasks_selection_chips.dart';
+import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
+import 'package:tasky/features/tasks/presentation/widgets/tasks_selection_chips.dart';
 
-import '../../../../core/di/di.dart';
-import 'widgets/task_item.dart';
+import '../../../../../core/di/di.dart';
+import '../../widgets/task_item.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
