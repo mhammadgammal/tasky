@@ -75,6 +75,46 @@ class TasksScreen extends StatelessWidget {
               ],
             ),
           ),
+          floatingActionButton: Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              margin: const EdgeInsets.only(right: 16.0, bottom: 16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        /* Action 1 */
+                      },
+                      backgroundColor: AppColor.secondaryColor,
+                      shape: const CircleBorder(eccentricity: 0.0),
+                      child: const Icon(
+                        Icons.qr_code_scanner_outlined,
+                        color: AppColor.mainColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0), // Add spacing between FABs
+                  SizedBox(
+                    width: 64.0,
+                    height: 64.0,
+                    child: FloatingActionButton(
+                      shape: const CircleBorder(eccentricity: 1.0),
+                      onPressed: () => AppNavigator.navigateToAddTask(context),
+                      elevation: 20.0,
+                      child: const Icon(
+                        Icons.add,
+                        size: 30.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );

@@ -7,7 +7,7 @@ abstract final class AppTheme {
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     iconTheme: const IconThemeData(
-      color: Colors.black,
+      color: AppColor.mainColor,
     ),
     iconButtonTheme: const IconButtonThemeData(
       style:
