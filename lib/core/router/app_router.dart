@@ -28,7 +28,7 @@ class AppRouter {
           child: const TasksScreen(),
         ),
     RouterHelper.addTask: (_) => BlocProvider(
-          create: (_) => AddTaskCubit(),
+          create: (_) => AddTaskCubit(sl.get()),
           child: const AddNewTaskScreen(),
         ),
   };

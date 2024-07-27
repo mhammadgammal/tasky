@@ -11,14 +11,14 @@ class TaskDto {
 
   TaskDto(
       {required this.taskId,
-        required this.title,
-        required this.description,
-        required this.imagePath,
-        required this.priority,
-        required this.status,
-        required this.userId,
-        required this.timeStampCreatedAt,
-        required this.timeStampUpdatedAt});
+      required this.title,
+      required this.description,
+      required this.imagePath,
+      required this.priority,
+      required this.status,
+      required this.userId,
+      required this.timeStampCreatedAt,
+      required this.timeStampUpdatedAt});
 
   factory TaskDto.fromJson(Map<String, dynamic> json) => TaskDto(
       taskId: json['_id'],
@@ -42,6 +42,27 @@ class TaskDto {
       "user": userId,
       "createdAt": timeStampCreatedAt,
       "updatedAt": timeStampUpdatedAt,
+    };
+  }
+
+  Map<String, String> toJsonAdd() {
+    return {
+      "image": imagePath,
+      "title": title,
+      "desc": description,
+      "priority": priority,
+      "status": status,
+    };
+  }
+
+  Map<String, String> toJsonEdit() {
+    return {
+      "image": imagePath,
+      "title": title,
+      "desc": description,
+      "priority": priority,
+      "status": status,
+      "user": userId,
     };
   }
 }

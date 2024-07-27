@@ -19,19 +19,25 @@ abstract interface class TaskApiServiceI {
 
 class TaskApiService implements TaskApiServiceI {
   @override
-  Future<Response> addTask(TaskDto task) =>
-      sl<DioHelper>().post(url: ApiEndPoints.todos, data: task.toJson());
+  Future<Response> addTask(TaskDto task) {
+    var taskData = task.toJsonAdd();
+    print('taskData: $taskData');
+    return sl<DioHelper>().post(url: ApiEndPoints.todos, data: taskData);
+  }
 
   @override
   Future<Response> deleteTask(String taskId) =>
       sl<DioHelper>().delete(url: '${ApiEndPoints.todos}/$taskId');
 
   @override
-  Future<Response> editTask(TaskDto task) => sl<DioHelper>().put(url: '${ApiEndPoints.todos}/${task.taskId}');
+  Future<Response> editTask(TaskDto task) => sl<DioHelper>().put(
+      url: '${ApiEndPoints.todos}/${task.taskId}', data: task.toJsonEdit());
 
   @override
-  Future<Response> getAllTasks() => sl<DioHelper>().get(url: ApiEndPoints.todos);
+  Future<Response> getAllTasks() =>
+      sl<DioHelper>().get(url: ApiEndPoints.todos);
 
   @override
-  Future<Response> getTask(String taskId) => sl<DioHelper>().get(url: '${ApiEndPoints.todos}/$taskId');
+  Future<Response> getTask(String taskId) =>
+      sl<DioHelper>().get(url: '${ApiEndPoints.todos}/$taskId');
 }

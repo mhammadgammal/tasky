@@ -15,5 +15,5 @@ class AppNavigator {
       Navigator.pushReplacementNamed(context, RouterHelper.home);
 
   static Future<dynamic> navigateToAddTask(BuildContext context) =>
-      Navigator.pushReplacementNamed(context, RouterHelper.addTask);
+      Navigator.pushNamed(context, RouterHelper.addTask);
 }

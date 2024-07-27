@@ -33,4 +33,9 @@ class TasksCubit extends Cubit<TasksState> {
     selectedTaskTypeIndex = selectedIndex;
     emit(TaskTypeChanged());
   }
+
+  void updateTasksList(TaskModel value) {
+    tasks.add(value);
+    emit(TasksListUpdatedState());
+  }
 }

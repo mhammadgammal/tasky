@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
+import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
 import 'package:tasky/features/tasks/presentation/widgets/tasks_selection_chips.dart';
 
@@ -103,7 +104,12 @@ class TasksScreen extends StatelessWidget {
                     height: 64.0,
                     child: FloatingActionButton(
                       shape: const CircleBorder(eccentricity: 1.0),
-                      onPressed: () => AppNavigator.navigateToAddTask(context),
+                      onPressed: () =>
+                          AppNavigator.navigateToAddTask(context).then((value) {
+                        if (value is TaskModel) {
+                          cubit.updateTasksList(value);
+                        }
+                      }),
                       elevation: 20.0,
                       child: const Icon(
                         Icons.add,

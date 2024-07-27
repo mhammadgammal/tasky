@@ -1,27 +1,35 @@
 import 'package:dio/dio.dart';
 import 'package:tasky/core/utils/api_utils/token_util.dart';
+
 import 'api_end_points.dart';
 
 class DioHelper {
   final Dio _dio;
 
   DioHelper(this._dio) {
+    print('initializing dio');
     _init();
   }
 
-  void _init() async{
+  void _init() async {
+    var token = await TokenUtil.getToken();
     _dio
       ..options.baseUrl = ApiEndPoints.baseUrl
       ..options.headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${await TokenUtil.getToken()}"
+        "Authorization": "Bearer $token"
       };
+    print(token);
   }
 
   Future<Response> get({
     required String url,
     Map<String, dynamic>? query,
   }) async {
+    _dio.options.headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${await TokenUtil.getToken()}"
+    };
     return await _dio.get(url, queryParameters: query);
   }
 

@@ -13,15 +13,19 @@ class TaskyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // String? refreshToken =
-    //     sl<CacheHelper>().getString(key: CacheKeys.refreshToken);
+    String? refreshToken =
+        sl<CacheHelper>().getString(key: CacheKeys.refreshToken);
     bool firstTime =
         sl<CacheHelper>().getBool(key: CacheKeys.firstTime) ?? true;
     print('firstTime: $firstTime');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tasky',
-      initialRoute: firstTime ? RouterHelper.boarding : RouterHelper.login,
+      initialRoute: firstTime
+          ? RouterHelper.boarding
+          : refreshToken == null
+              ? RouterHelper.login
+              : RouterHelper.home,
       navigatorKey: sl<AppContext>().navigatorKey,
       routes: AppRouter.generateRoutes,
       theme: AppTheme.lightTheme,
