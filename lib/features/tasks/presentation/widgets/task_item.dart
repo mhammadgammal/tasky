@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_text_style.dart';
+import 'package:tasky/core/widgets/delete_dailogue.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 
 import 'priority_widget.dart';
@@ -11,12 +13,14 @@ class TaskItem extends StatelessWidget {
       required this.task,
       required this.statusColors,
       required this.onItemPressed,
-      required this.priorityColor});
+      required this.priorityColor,
+      required this.deleteTaskCallBack});
 
   final TaskModel task;
   final (Color, Color) statusColors;
   final Color priorityColor;
   final void Function() onItemPressed;
+  final dynamic Function() deleteTaskCallBack;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +74,20 @@ class TaskItem extends StatelessWidget {
                 case 'Edit':
                   // Handle edit action
                   print('edit task');
+                  AppNavigator.navigateToTaskDetails(context, task.taskId);
                   break;
                 case 'Delete':
                   // Handle delete action
+                  showDialog(
+                      context: context,
+                      builder: (context) =>
+                          DeleteDialogue(task.taskId, onYesPressed: () {
+                            deleteTaskCallBack();
+                            Navigator.pop(context);
+                          }, onNoPressed: () {
+                            Navigator.pop(context);
+                          }));
+
                   print('delete task');
                   break;
                 // Add more cases for other menu items

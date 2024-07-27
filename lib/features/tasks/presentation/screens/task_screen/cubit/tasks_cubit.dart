@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasky/core/base_use_case/base_parameter.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_all_tasks_use_case.dart';
+
+import '../../../../domain/use_case/delete_task_use_case.dart';
 
 part 'tasks_state.dart';
 
 class TasksCubit extends Cubit<TasksState> {
-  late final GetAllTasksUseCase _getAllTasksUseCase;
+  final GetAllTasksUseCase _getAllTasksUseCase;
+  final DeleteTaskUseCase _deleteTaskUseCase;
 
-  TasksCubit(this._getAllTasksUseCase) : super(TasksInitial());
+  TasksCubit(this._getAllTasksUseCase, this._deleteTaskUseCase)
+      : super(TasksInitial());
 
   static TasksCubit get(context) => BlocProvider.of(context);
 
@@ -44,5 +49,15 @@ class TasksCubit extends Cubit<TasksState> {
     tasks[index] = value;
 
     emit(TasksListUpdatedState());
+  }
+
+  Future<void> deleteTask(String taskId) async {
+    var result = await _deleteTaskUseCase.perform(TaskIdParameter(taskId));
+    result.fold((_) {
+      tasks.removeWhere((task) => task.taskId == taskId);
+      emit(TaskDeletedSuccessfullyState());
+    }, (error) {
+      emit(TaskDeletedFailedState());
+    });
   }
 }

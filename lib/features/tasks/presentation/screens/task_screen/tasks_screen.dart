@@ -71,6 +71,9 @@ class TasksScreen extends StatelessWidget {
                           AppColor.getStatusColors(cubit.tasks[index].status),
                       priorityColor: AppColor.getPrioritiesColors(
                           cubit.tasks[index].priority),
+                      deleteTaskCallBack: () {
+                        cubit.deleteTask(cubit.tasks[index].taskId);
+                      },
                       onItemPressed: () => AppNavigator.navigateToTaskDetails(
                               context, cubit.tasks[index].taskId)
                           .then((value) {
