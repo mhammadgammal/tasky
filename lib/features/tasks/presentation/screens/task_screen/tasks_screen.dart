@@ -66,11 +66,20 @@ class TasksScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: cubit.tasks.length,
                     itemBuilder: (context, index) => TaskItem(
-                        task: cubit.tasks[index],
-                        statusColors:
-                            AppColor.getStatusColors(cubit.tasks[index].status),
-                        priorityColor: AppColor.getPrioritiesColors(
-                            cubit.tasks[index].priority)),
+                      task: cubit.tasks[index],
+                      statusColors:
+                          AppColor.getStatusColors(cubit.tasks[index].status),
+                      priorityColor: AppColor.getPrioritiesColors(
+                          cubit.tasks[index].priority),
+                      onItemPressed: () => AppNavigator.navigateToTaskDetails(
+                              context, cubit.tasks[index].taskId)
+                          .then((value) {
+                        if (value is TaskModel) {
+                          print('value.status: ${value.status}');
+                          cubit.updateToTasksList(value);
+                        }
+                      }),
+                    ),
                   ),
                 ),
               ],
@@ -107,7 +116,7 @@ class TasksScreen extends StatelessWidget {
                       onPressed: () =>
                           AppNavigator.navigateToAddTask(context).then((value) {
                         if (value is TaskModel) {
-                          cubit.updateTasksList(value);
+                          cubit.addToTasksList(value);
                         }
                       }),
                       elevation: 20.0,

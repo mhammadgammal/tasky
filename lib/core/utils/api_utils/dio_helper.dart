@@ -12,24 +12,21 @@ class DioHelper {
   }
 
   void _init() async {
-    var token = await TokenUtil.getToken();
-    _dio
-      ..options.baseUrl = ApiEndPoints.baseUrl
-      ..options.headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      };
-    print(token);
+    _dio.options.baseUrl = ApiEndPoints.baseUrl;
   }
 
   Future<Response> get({
     required String url,
     Map<String, dynamic>? query,
   }) async {
-    _dio.options.headers = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer ${await TokenUtil.getToken()}"
-    };
+    bool isRefresh = (url == ApiEndPoints.refreshToken);
+    print('is refresh token: $url $isRefresh');
+    if (!isRefresh) {
+      _dio.options.headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${await TokenUtil.getToken()}"
+      };
+    }
     return await _dio.get(url, queryParameters: query);
   }
 
@@ -38,6 +35,10 @@ class DioHelper {
     Map<String, dynamic>? query,
     required dynamic data,
   }) async {
+    _dio.options.headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${await TokenUtil.getToken()}"
+    };
     return await _dio.post(url, queryParameters: query, data: data);
   }
 
@@ -46,6 +47,10 @@ class DioHelper {
     Map<String, dynamic>? query,
     dynamic data,
   }) async {
+    _dio.options.headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${await TokenUtil.getToken()}"
+    };
     return await _dio.put(url, queryParameters: query, data: data);
   }
 
@@ -54,6 +59,10 @@ class DioHelper {
     Map<String, dynamic>? query,
     dynamic data,
   }) async {
+    _dio.options.headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${await TokenUtil.getToken()}"
+    };
     return await _dio.delete(url, queryParameters: query, data: data);
   }
 }

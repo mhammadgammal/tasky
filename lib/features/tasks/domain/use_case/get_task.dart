@@ -5,11 +5,11 @@ import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 
 import '../../data/repository/tasks_repository_impl.dart';
 
-class GetTask
+class GetTaskUseCase
     implements ParameterUseCase<Either<TaskModel, int>, TaskIdParameter> {
   late final TasksRepositoryImpl _repo;
 
-  GetTask(this._repo);
+  GetTaskUseCase(this._repo);
 
   @override
   Future<Either<TaskModel, int>> perform(TaskIdParameter parameter) async {

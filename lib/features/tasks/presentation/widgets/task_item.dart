@@ -10,11 +10,13 @@ class TaskItem extends StatelessWidget {
       {super.key,
       required this.task,
       required this.statusColors,
+      required this.onItemPressed,
       required this.priorityColor});
 
   final TaskModel task;
   final (Color, Color) statusColors;
   final Color priorityColor;
+  final void Function() onItemPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class TaskItem extends StatelessWidget {
       children: [
         Expanded(
           child: ListTile(
+            onTap: onItemPressed,
             leading: const Icon(Icons.task),
             title: Row(
               children: [

@@ -8,4 +8,6 @@ abstract class RouterHelper {
   static const String home = '/home';
 
   static const String addTask = '/addTask';
+
+  static const String taskDetails = '/taskDetails';
 }

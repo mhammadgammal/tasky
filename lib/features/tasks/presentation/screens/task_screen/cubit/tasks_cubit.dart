@@ -34,8 +34,15 @@ class TasksCubit extends Cubit<TasksState> {
     emit(TaskTypeChanged());
   }
 
-  void updateTasksList(TaskModel value) {
+  void addToTasksList(TaskModel value) {
     tasks.add(value);
+    emit(TasksListUpdatedState());
+  }
+
+  void updateToTasksList(TaskModel value) {
+    int index = tasks.indexWhere((task) => task.taskId == value.taskId);
+    tasks[index] = value;
+
     emit(TasksListUpdatedState());
   }
 }

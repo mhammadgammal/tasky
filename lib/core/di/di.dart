@@ -10,6 +10,7 @@ import 'package:tasky/features/tasks/data/data_source/network/task_api_service.d
 import 'package:tasky/features/tasks/data/repository/tasks_repository_impl.dart';
 import 'package:tasky/features/tasks/domain/use_case/delete_task_use_case.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_all_tasks_use_case.dart';
+import 'package:tasky/features/tasks/domain/use_case/get_task.dart';
 import 'package:tasky/features/tasks/domain/use_case/update_task_use_case.dart';
 
 import '../../features/authentication/data/network/authentication_api_sevice.dart';
@@ -55,6 +56,7 @@ Future<void> init() async {
       () => TasksRepositoryImpl(sl.get()));
   sl.registerLazySingleton<GetAllTasksUseCase>(
       () => GetAllTasksUseCase(sl.get()));
+  sl.registerLazySingleton<GetTaskUseCase>(() => GetTaskUseCase(sl.get()));
   sl.registerLazySingleton<AddTaskUseCase>(() => AddTaskUseCase(sl.get()));
   sl.registerLazySingleton<UpdateTaskUseCase>(
       () => UpdateTaskUseCase(sl.get()));

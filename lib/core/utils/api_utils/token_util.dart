@@ -63,7 +63,7 @@ abstract class TokenUtil {
       String refreshToken) async {
     print('Performing refresh token');
     return await sl<DioHelper>()
-        .get(url: '${ApiEndPoints.refreshToken}?token=$refreshToken');
+        .get(url: ApiEndPoints.refreshToken, query: {'token': refreshToken});
   }
 
   static Future<bool> setToken(String token) async =>

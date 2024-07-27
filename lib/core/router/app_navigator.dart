@@ -16,4 +16,8 @@ class AppNavigator {
 
   static Future<dynamic> navigateToAddTask(BuildContext context) =>
       Navigator.pushNamed(context, RouterHelper.addTask);
+
+  static Future<dynamic> navigateToTaskDetails(
+          BuildContext context, String taskId) =>
+      Navigator.pushNamed(context, RouterHelper.taskDetails, arguments: taskId);
 }
