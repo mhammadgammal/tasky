@@ -20,4 +20,7 @@ class AppNavigator {
   static Future<dynamic> navigateToTaskDetails(
           BuildContext context, String taskId) =>
       Navigator.pushNamed(context, RouterHelper.taskDetails, arguments: taskId);
+
+  static Future<dynamic> navigateToQrCode(BuildContext context) =>
+      Navigator.pushNamed(context, RouterHelper.qrCodeScanner);
 }

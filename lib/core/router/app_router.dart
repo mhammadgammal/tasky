@@ -13,10 +13,12 @@ import 'package:tasky/features/tasks/presentation/screens/task_details_screen/cu
 import 'package:tasky/features/tasks/presentation/screens/task_details_screen/task_details_screen.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/tasks_screen.dart';
+import 'package:tasky/features/tasks/presentation/widgets/qr_code_scanner.dart';
 
 class AppRouter {
   static final Map<String, WidgetBuilder> generateRoutes = {
     RouterHelper.boarding: (_) => const BoardingScreen(),
+    RouterHelper.qrCodeScanner: (_) => const QrCodeScanner(),
     RouterHelper.login: (_) => BlocProvider(
           create: (context) => LoginCubit(sl.get()),
           child: const LoginScreen(),

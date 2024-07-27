@@ -101,6 +101,11 @@ class TasksScreen extends StatelessWidget {
                     child: FloatingActionButton(
                       onPressed: () {
                         /* Action 1 */
+                        AppNavigator.navigateToQrCode(context).then((value) {
+                          if (value is String) {
+                            AppNavigator.navigateToTaskDetails(context, value);
+                          }
+                        });
                       },
                       backgroundColor: AppColor.secondaryColor,
                       shape: const CircleBorder(eccentricity: 0.0),
