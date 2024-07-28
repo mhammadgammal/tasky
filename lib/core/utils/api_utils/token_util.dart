@@ -4,10 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/cache/cache_keys.dart';
+import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/utils/api_utils/api_end_points.dart';
 import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/core/utils/api_utils/dio_helper.dart';
 import 'package:tasky/core/widgets/session_ended_dialogue.dart';
+import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 
 import '../../di/di.dart';
 
@@ -38,11 +40,13 @@ abstract class TokenUtil {
         showToast(errorMessage);
         if (e.response?.statusCode == 401) {
           // Handle unauthorized
-          await logout();
           showDialog(
               context: sl<BuildContext>(),
               builder: (context) => const SessionEndedDialogue(
                   errorMessage: 'Session Ended, Please Resign in'));
+          await logout()
+              ? AppNavigator.navigateAndFinishToLogin(sl<BuildContext>())
+              : null;
           return '';
         } else if (e.response?.statusCode == 403) {
           // Handle forbidden
@@ -89,5 +93,7 @@ abstract class TokenUtil {
     );
   }
 
-  static logout() {}
+  static Future<bool> logout() async {
+    return await sl<AuthenticationRepoImpl>().logout();
+  }
 }
