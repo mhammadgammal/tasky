@@ -27,7 +27,7 @@ class TasksScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () => AppNavigator.navigateToProfile(context),
                   icon: const Icon(
                     Icons.person_2_outlined,
                     color: Colors.black,

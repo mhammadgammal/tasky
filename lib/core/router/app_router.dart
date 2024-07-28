@@ -7,6 +7,8 @@ import 'package:tasky/features/authentication/presentation/login/login_screen.da
 import 'package:tasky/features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'package:tasky/features/authentication/presentation/register/register_screen.dart';
 import 'package:tasky/features/boarding/boarding_screen.dart';
+import 'package:tasky/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:tasky/features/profile/presentation/profile_screen.dart';
 import 'package:tasky/features/tasks/presentation/screens/add_task/add_task.dart';
 import 'package:tasky/features/tasks/presentation/screens/add_task/cubit/add_task_cubit.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_details_screen/cubit/task_details_cubit.dart';
@@ -41,6 +43,10 @@ class AppRouter {
         create: (_) => TaskDetailsCubit(sl.get(), sl.get())..getTask(taskId),
         child: const TaskDetailsScreen(),
       );
-    }
+    },
+    RouterHelper.profile: (_) => BlocProvider(
+          create: (context) => ProfileCubit(sl.get())..getProfile(),
+          child: const ProfileScreen(),
+        )
   };
 }

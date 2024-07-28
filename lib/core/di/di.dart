@@ -6,6 +6,8 @@ import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/utils/api_utils/dio_helper.dart';
 import 'package:tasky/features/authentication/domain/use_case/login_use_case.dart';
 import 'package:tasky/features/authentication/domain/use_case/register_use_case.dart';
+import 'package:tasky/features/profile/data/data_source/profile_api_service.dart';
+import 'package:tasky/features/profile/data/repo/profile_repo.dart';
 import 'package:tasky/features/tasks/data/data_source/network/task_api_service.dart';
 import 'package:tasky/features/tasks/data/repository/tasks_repository_impl.dart';
 import 'package:tasky/features/tasks/domain/use_case/delete_task_use_case.dart';
@@ -62,5 +64,10 @@ Future<void> init() async {
       () => UpdateTaskUseCase(sl.get()));
   sl.registerLazySingleton<DeleteTaskUseCase>(
       () => DeleteTaskUseCase(sl.get()));
+  // #endregion
+
+  // #region profile
+  sl.registerLazySingleton<ProfileApiService>(() => ProfileApiService());
+  sl.registerLazySingleton<ProfileRepoImp>(() => ProfileRepoImp(sl.get()));
   // #endregion
 }

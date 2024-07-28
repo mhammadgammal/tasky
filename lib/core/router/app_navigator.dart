@@ -23,4 +23,7 @@ class AppNavigator {
 
   static Future<dynamic> navigateToQrCode(BuildContext context) =>
       Navigator.pushNamed(context, RouterHelper.qrCodeScanner);
+
+  static Future<dynamic> navigateToProfile(context) =>
+      Navigator.pushNamed(context, RouterHelper.profile);
 }

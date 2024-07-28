@@ -12,4 +12,5 @@ abstract class RouterHelper {
   static const String taskDetails = '/taskDetails';
 
   static const String qrCodeScanner = '/qrCodeScanner';
+  static const String profile = '/profile';
 }
