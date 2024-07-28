@@ -64,18 +64,19 @@ class TasksScreen extends StatelessWidget {
                     onChipPressed: cubit.onTaskTypeSelected),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: cubit.tasks.length,
+                    itemCount: cubit.getSelectedItems().length,
                     itemBuilder: (context, index) => TaskItem(
-                      task: cubit.tasks[index],
-                      statusColors:
-                          AppColor.getStatusColors(cubit.tasks[index].status),
+                      task: cubit.getSelectedItems()[index],
+                      statusColors: AppColor.getStatusColors(
+                          cubit.getSelectedItems()[index].status),
                       priorityColor: AppColor.getPrioritiesColors(
-                          cubit.tasks[index].priority),
+                          cubit.getSelectedItems()[index].priority),
                       deleteTaskCallBack: () {
-                        cubit.deleteTask(cubit.tasks[index].taskId);
+                        cubit
+                            .deleteTask(cubit.getSelectedItems()[index].taskId);
                       },
                       onItemPressed: () => AppNavigator.navigateToTaskDetails(
-                              context, cubit.tasks[index].taskId)
+                              context, cubit.getSelectedItems()[index].taskId)
                           .then((value) {
                         if (value is TaskModel) {
                           print('value.status: ${value.status}');
