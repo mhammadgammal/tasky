@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/cache/cache_keys.dart';
@@ -9,6 +8,7 @@ import 'package:tasky/core/utils/api_utils/api_end_points.dart';
 import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/core/utils/api_utils/dio_helper.dart';
 import 'package:tasky/core/widgets/session_ended_dialogue.dart';
+import 'package:tasky/core/widgets/show_toast.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 
 import '../../di/di.dart';
@@ -81,17 +81,6 @@ abstract class TokenUtil {
   static Future<bool> _isTokenExpired(String token) async =>
       JwtDecoder.isExpired(token);
 
-  static void showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }
 
   static Future<bool> logout() async {
     return await sl<AuthenticationRepoImpl>().logout();
