@@ -11,6 +11,7 @@ import 'package:tasky/features/tasks/presentation/widgets/status_drop_down_widge
 class TaskDetailsBody extends StatelessWidget {
   const TaskDetailsBody(this.task,
       {super.key,
+      required this.formKey,
       required this.status,
       required this.selectedStatus,
       required this.onStatusChanged,
@@ -18,6 +19,7 @@ class TaskDetailsBody extends StatelessWidget {
       required this.selectedPriority,
       required this.onPriorityChanged});
 
+  final GlobalKey<FormState> formKey;
   final List<String> status;
   final String selectedStatus;
   final void Function(String?) onStatusChanged;
@@ -29,44 +31,48 @@ class TaskDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 15.0, vertical: 15.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Image.file(File(task.imagePath)),
-          const SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            task.title,
-            style: AppTextStyle.font20BlackBold,
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Text(
-            task.description,
-            style: const TextStyle(color: AppColor.solidGrey, fontSize: 16.0),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          StatusDropDownWidget(
-              status: status,
-              selectedStatus: selectedStatus,
-              onStatusChanged: onStatusChanged),
-          const SizedBox(
-            height: 20.0,
-          ),
-          PriorityDropDownWidget(
-              priorities: priorities,
-              selectedPriority: selectedPriority,
-              onPriorityChanged: onPriorityChanged),
-          const SizedBox(
-            height: 20.0,
-          ),
-          QrImageView(data: task.taskId),
-        ]),
+      child: Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 15.0, vertical: 15.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Image.file(File(task.imagePath)),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              task.title,
+              style: AppTextStyle.font20BlackBold,
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              task.description,
+              style: const TextStyle(color: AppColor.solidGrey, fontSize: 16.0),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            StatusDropDownWidget(
+                status: status,
+                selectedStatus: selectedStatus,
+                onStatusChanged: onStatusChanged),
+            const SizedBox(
+              height: 20.0,
+            ),
+            PriorityDropDownWidget(
+                priorities: priorities,
+                selectedPriority: selectedPriority,
+                onPriorityChanged: onPriorityChanged),
+            const SizedBox(
+              height: 20.0,
+            ),
+            QrImageView(data: task.taskId),
+          ]),
+        ),
       ),
     );
   }

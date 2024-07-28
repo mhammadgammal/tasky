@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
 import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
@@ -17,6 +17,7 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
   static TaskDetailsCubit get(context) => BlocProvider.of(context);
 
   late TaskModel task;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<String> status = ['waiting', 'in progress', 'finished'];
   List<String> priorities = ['low', 'medium', 'high'];
   String? selectedStatus;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasky/core/widgets/show_toast.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_details_screen/task_details_body.dart';
 
 import 'cubit/task_details_cubit.dart';
@@ -22,7 +23,15 @@ class TaskDetailsScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: () async => await cubit.updateTask(),
+              onPressed: () async {
+                if (cubit.selectedStatus == cubit.status[1]) {
+                  showToast(
+                      'In Progress is unavailable currently, please select another status');
+                }
+                if (cubit.formKey.currentState!.validate()) {
+                  cubit.updateTask();
+                }
+              },
               icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black,
@@ -36,6 +45,7 @@ class TaskDetailsScreen extends StatelessWidget {
               ? const Center(child: CircularProgressIndicator())
               : TaskDetailsBody(
                   cubit.task,
+                  formKey: cubit.formKey,
                   status: cubit.status,
                   selectedStatus: cubit.selectedStatus ?? cubit.status[0],
                   onStatusChanged: cubit.onStatusChanged,
