@@ -7,7 +7,7 @@ final class TasksInitial extends TasksState {}
 
 final class TaskTypeChanged extends TasksState {}
 
-final class TasksLoadingSuccessState extends TasksState {}
+final class TasksLoadingState extends TasksState {}
 
 final class TasksListUpdatedState extends TasksState {}
 

@@ -24,7 +24,7 @@ class TasksCubit extends Cubit<TasksState> {
   List<TaskModel> tasks = [];
 
   Future<void> fetchAllTasks() async {
-    emit(TasksLoadingSuccessState());
+    emit(TasksLoadingState());
     var result = await _getAllTasksUseCase.perform();
     result.fold((tasks) {
       this.tasks = tasks;

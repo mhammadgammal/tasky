@@ -46,49 +46,57 @@ class TasksScreen extends StatelessWidget {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 22.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'My Tasks',
-                  style: TextStyle(
-                      color: AppColor.solidGrey,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                TasksSelectionChips(
-                    chipsItems: cubit.taskTypeItems,
-                    selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
-                    onChipPressed: cubit.onTaskTypeSelected),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cubit.getSelectedItems().length,
-                    itemBuilder: (context, index) => TaskItem(
-                      task: cubit.getSelectedItems()[index],
-                      statusColors: AppColor.getStatusColors(
-                          cubit.getSelectedItems()[index].status),
-                      priorityColor: AppColor.getPrioritiesColors(
-                          cubit.getSelectedItems()[index].priority),
-                      deleteTaskCallBack: () {
-                        cubit
-                            .deleteTask(cubit.getSelectedItems()[index].taskId);
-                      },
-                      onItemPressed: () => AppNavigator.navigateToTaskDetails(
-                              context, cubit.getSelectedItems()[index].taskId)
-                          .then((value) {
-                        if (value is TaskModel) {
-                          print('value.status: ${value.status}');
-                          cubit.updateToTasksList(value);
-                        }
-                      }),
-                    ),
+          body: state is TasksLoadingState
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColor.mainColor,
+                  ),
+                )
+              : Padding(
+                  padding:
+                      const EdgeInsetsDirectional.symmetric(horizontal: 22.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'My Tasks',
+                        style: TextStyle(
+                            color: AppColor.solidGrey,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TasksSelectionChips(
+                          chipsItems: cubit.taskTypeItems,
+                          selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
+                          onChipPressed: cubit.onTaskTypeSelected),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: cubit.getSelectedItems().length,
+                          itemBuilder: (context, index) => TaskItem(
+                            task: cubit.getSelectedItems()[index],
+                            statusColors: AppColor.getStatusColors(
+                                cubit.getSelectedItems()[index].status),
+                            priorityColor: AppColor.getPrioritiesColors(
+                                cubit.getSelectedItems()[index].priority),
+                            deleteTaskCallBack: () {
+                              cubit.deleteTask(
+                                  cubit.getSelectedItems()[index].taskId);
+                            },
+                            onItemPressed: () =>
+                                AppNavigator.navigateToTaskDetails(context,
+                                        cubit.getSelectedItems()[index].taskId)
+                                    .then((value) {
+                              if (value is TaskModel) {
+                                print('value.status: ${value.status}');
+                                cubit.updateToTasksList(value);
+                              }
+                            }),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
           floatingActionButton: Align(
             alignment: Alignment.bottomRight,
             child: Container(
