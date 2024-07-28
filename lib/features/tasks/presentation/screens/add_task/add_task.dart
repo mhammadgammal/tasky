@@ -134,6 +134,7 @@ class AddNewTaskScreen extends StatelessWidget {
                                   ),
                                 ))
                             .toList(),
+                        validator: cubit.validatePriorityDropdown,
                         decoration: InputDecoration(
                             labelStyle: const TextStyle(color: Colors.black),
                             border: OutlineInputBorder(
@@ -158,7 +159,11 @@ class AddNewTaskScreen extends StatelessWidget {
                       height: 20.0,
                     ),
                     TaskyButton(
-                        onButtonPressed: () => cubit.addTask(),
+                        onButtonPressed: () {
+                          if (cubit.formKey.currentState!.validate()) {
+                            cubit.addTask();
+                          }
+                        },
                         horizontalPadding: 0.0,
                         content: const Text(
                           'Add Task',

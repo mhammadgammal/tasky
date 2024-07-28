@@ -27,6 +27,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   XFile? imageFile;
 
   late TaskModel task;
+
   void onPriorityChanged(value) {
     selectedPriority = value;
     print(selectedPriority);
@@ -58,4 +59,9 @@ class AddTaskCubit extends Cubit<AddTaskState> {
       emit(TaskAddFailedState(errorMessage));
     });
   }
+
+  String? validatePriorityDropdown(String? value) =>
+      value == null || value.isEmpty
+          ? 'Please select a priority for your task'
+          : null;
 }
