@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/theme/app_images.dart';
 import 'package:tasky/core/theme/app_text_style.dart';
 import 'package:tasky/core/utils/screen_utils/screen_util.dart';
+import 'package:tasky/core/widgets/auth_error_dialogue.dart';
 import 'package:tasky/core/widgets/default_form_field.dart';
 import 'package:tasky/core/widgets/phone_number_input_widget.dart';
 import 'package:tasky/core/widgets/tasky_button.dart';
@@ -19,7 +20,11 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is RegisterSuccessState) {
+          AppNavigator.navigateAndFinishToLogin(context);
+        } else if (state is RegisterFailureState) {
+          showDialog(context: context, builder: (context) => AuthErrorDialogue(errorMessage: state.errorMessage));
+        }
       },
       builder: (context, state) {
         var cubit = RegisterCubit.get(context);
