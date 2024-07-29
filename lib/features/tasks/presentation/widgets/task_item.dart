@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_text_style.dart';
-import 'package:tasky/core/widgets/delete_dailogue.dart';
+import 'package:tasky/core/widgets/over_flow_menu.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
+import 'package:tasky/features/tasks/presentation/widgets/task_thumbnail.dart';
 
 import 'priority_widget.dart';
 import 'progress_status_widget.dart';
@@ -14,13 +14,15 @@ class TaskItem extends StatelessWidget {
       required this.statusColors,
       required this.onItemPressed,
       required this.priorityColor,
-      required this.deleteTaskCallBack});
+      required this.deleteTaskCallBack,
+      required this.ifImageExist});
 
   final TaskModel task;
   final (Color, Color) statusColors;
   final Color priorityColor;
   final void Function() onItemPressed;
-  final dynamic Function() deleteTaskCallBack;
+  final dynamic Function(String) deleteTaskCallBack;
+  final bool ifImageExist;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,8 @@ class TaskItem extends StatelessWidget {
         Expanded(
           child: ListTile(
             onTap: onItemPressed,
-            leading: const Icon(Icons.task),
+            leading: TaskThumbnail(
+                ifImageExist: ifImageExist, imagePath: task.imagePath),
             title: Row(
               children: [
                 Expanded(
@@ -58,50 +61,11 @@ class TaskItem extends StatelessWidget {
           ),
         ),
         Align(
-          // width: 50.0,
           heightFactor: 1.8,
           widthFactor: 0.5,
           alignment: AlignmentDirectional.topCenter,
-          child: PopupMenuButton<String>(
-            icon: const Icon(
-              Icons.more_vert,
-              size: 30.0,
-              color: Colors.black,
-            ),
-            onSelected: (String item) {
-              // Handle the selected item here
-              switch (item) {
-                case 'Edit':
-                  // Handle edit action
-                  print('edit task');
-                  AppNavigator.navigateToTaskDetails(context, task.taskId);
-                  break;
-                case 'Delete':
-                  // Handle delete action
-                  showDialog(
-                      context: context,
-                      builder: (context) =>
-                          DeleteDialogue(task.taskId, onYesPressed: () {
-                            deleteTaskCallBack();
-                            Navigator.pop(context);
-                          }, onNoPressed: () {
-                            Navigator.pop(context);
-                          }));
-
-                  print('delete task');
-                  break;
-                // Add more cases for other menu items
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return {'Edit', 'Delete'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
+          child: OverFlowMenu(
+              taskId: task.taskId, deleteTaskCallBack: deleteTaskCallBack),
         ),
       ],
     );

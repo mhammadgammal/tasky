@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,9 +52,10 @@ class AddTaskCubit extends Cubit<AddTaskState> {
         userId: '-1',
         timeStampCreatedAt: 'timeStampCreatedAt',
         timeStampUpdatedAt: 'timeStampUpdatedAt')));
-
-    result.fold((task) {
+    result.fold((task) async {
       this.task = task;
+      bool isExist = await File(task.imagePath).exists();
+      this.task.isImageExist = isExist;
       emit(TaskAddedSuccessState());
     }, (error) {
       var errorMessage = ApiErrorHandler.handelErrorMessage(error);

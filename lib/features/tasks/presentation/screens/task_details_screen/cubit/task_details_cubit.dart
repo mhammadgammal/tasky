@@ -3,17 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
 import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
+import 'package:tasky/features/tasks/domain/use_case/delete_task_use_case.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_task.dart';
 import 'package:tasky/features/tasks/domain/use_case/update_task_use_case.dart';
 
 part 'task_details_state.dart';
 
 class TaskDetailsCubit extends Cubit<TaskDetailsState> {
-  TaskDetailsCubit(this._getTaskUseCase, this._updateTaskUseCase)
+  TaskDetailsCubit(this._getTaskUseCase, this._updateTaskUseCase, this._deleteTaskUseCase)
       : super(TaskDetailsInitial());
   final GetTaskUseCase _getTaskUseCase;
   final UpdateTaskUseCase _updateTaskUseCase;
-
+  final DeleteTaskUseCase _deleteTaskUseCase;
   static TaskDetailsCubit get(context) => BlocProvider.of(context);
 
   late TaskModel task;
@@ -68,6 +69,15 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
       emit(TaskUpdateSuccessState());
     }, (e) {
       emit(TaskUpdateFailureState(ApiErrorHandler.handelErrorMessage(e)));
+    });
+  }
+
+    Future<void> deleteTask(String taskId) async {
+    var result = await _deleteTaskUseCase.perform(TaskIdParameter(taskId));
+    result.fold((_) {
+      emit(TaskDeletedSuccessfullyState());
+    }, (error) {
+      emit(TaskDeletedFailedState());
     });
   }
 }

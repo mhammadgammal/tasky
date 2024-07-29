@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tasky/core/theme/app_color.dart';
@@ -7,6 +5,7 @@ import 'package:tasky/core/theme/app_text_style.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/presentation/widgets/priority_drop_down_widget.dart';
 import 'package:tasky/features/tasks/presentation/widgets/status_drop_down_widget.dart';
+import 'package:tasky/features/tasks/presentation/widgets/task_thumbnail.dart';
 
 class TaskDetailsBody extends StatelessWidget {
   const TaskDetailsBody(this.task,
@@ -38,7 +37,10 @@ class TaskDetailsBody extends StatelessWidget {
               horizontal: 15.0, vertical: 15.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Image.file(File(task.imagePath)),
+            Center(
+              child: TaskThumbnail(
+                  ifImageExist: task.isImageExist, imagePath: task.imagePath, thumbnailSize: 150.0,),
+            ),
             const SizedBox(
               height: 20.0,
             ),

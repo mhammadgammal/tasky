@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasky/core/widgets/over_flow_menu.dart';
 import 'package:tasky/core/widgets/show_toast.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_details_screen/task_details_body.dart';
 
@@ -17,6 +18,9 @@ class TaskDetailsScreen extends StatelessWidget {
               'cubit.task.status: ${TaskDetailsCubit.get(context).task.status}');
           Navigator.pop(context, TaskDetailsCubit.get(context).task);
         }
+        if (state is TaskDeletedSuccessfullyState) {
+          Navigator.pop(context, TaskDetailsCubit.get(context).task.taskId);
+        }
       },
       builder: (context, state) {
         var cubit = TaskDetailsCubit.get(context);
@@ -28,8 +32,10 @@ class TaskDetailsScreen extends StatelessWidget {
                   showToast(
                       'In Progress is unavailable currently, please select another status');
                 }
-                if (cubit.formKey.currentState!.validate()) {
+                if (cubit.formKey.currentState!.validate() && cubit.isChanged) {
                   cubit.updateTask();
+                } else {
+                  Navigator.pop(context);
                 }
               },
               icon: const Icon(
@@ -40,6 +46,13 @@ class TaskDetailsScreen extends StatelessWidget {
             title: Text(state is TaskDetailLoadingState
                 ? ''
                 : cubit.getTaskField().title),
+            actions: [
+              OverFlowMenu(
+                  taskId: state is TaskDetailLoadingState
+                      ? ''
+                      : cubit.getTaskField().taskId,
+                  deleteTaskCallBack: cubit.deleteTask)
+            ],
           ),
           body: state is TaskDetailLoadingState
               ? const Center(child: CircularProgressIndicator())

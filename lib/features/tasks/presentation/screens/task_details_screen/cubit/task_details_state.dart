@@ -17,6 +17,10 @@ final class PriorityChangedState extends TaskDetailsState {}
 
 final class TaskUpdateSuccessState extends TaskDetailsState {}
 
+final class TaskDeletedSuccessfullyState extends TaskDetailsState {}
+
+final class TaskDeletedFailedState extends TaskDetailsState {}
+
 final class TaskUpdateFailureState extends TaskDetailsState {
   final String e;
 

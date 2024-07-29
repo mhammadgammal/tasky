@@ -17,4 +17,6 @@ final class TaskDeletedFailedState extends TasksState {}
 
 final class TaskDeletedSuccessfullyState extends TasksState {}
 
+final class IsImageExistState extends TasksState {}
+
 final class SessionTerminated extends TasksState {}

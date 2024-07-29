@@ -40,7 +40,7 @@ class AppRouter {
     RouterHelper.taskDetails: (context) {
       var taskId = ModalRoute.of(context)!.settings.arguments as String;
       return BlocProvider(
-        create: (_) => TaskDetailsCubit(sl.get(), sl.get())..getTask(taskId),
+        create: (_) => TaskDetailsCubit(sl.get(), sl.get(), sl.get())..getTask(taskId),
         child: const TaskDetailsScreen(),
       );
     },

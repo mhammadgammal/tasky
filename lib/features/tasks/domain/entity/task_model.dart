@@ -8,7 +8,7 @@ class TaskModel {
   late String userId;
   late String timeStampCreatedAt;
   late String timeStampUpdatedAt;
-
+  late bool isImageExist;
   TaskModel(
       {required this.taskId,
       required this.title,

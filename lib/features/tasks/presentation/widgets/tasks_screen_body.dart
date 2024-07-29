@@ -6,15 +6,16 @@ import '../../../../core/router/app_navigator.dart';
 import '../../domain/entity/task_model.dart';
 
 class TasksScreenBody extends StatelessWidget {
-  const TasksScreenBody(
-      {super.key,
-      required this.taskTypeItems,
-      required this.selectedItems,
-      required this.selectedTaskTypeIndex,
-      required this.onTaskTypeSelected,
-      required this.deleteTask,
-      required this.updateToTasksList,
-      required this.addToTasksList});
+  const TasksScreenBody({
+    super.key,
+    required this.taskTypeItems,
+    required this.selectedItems,
+    required this.selectedTaskTypeIndex,
+    required this.onTaskTypeSelected,
+    required this.deleteTask,
+    required this.updateToTasksList,
+    required this.addToTasksList,
+  });
 
   final List<String> taskTypeItems;
   final List<TaskModel> selectedItems;
@@ -30,11 +31,10 @@ class TasksScreenBody extends StatelessWidget {
       itemCount: selectedItems.length,
       itemBuilder: (context, index) => TaskItem(
         task: selectedItems[index],
-        statusColors:
-            AppColor.getStatusColors(selectedItems[index].status),
+        statusColors: AppColor.getStatusColors(selectedItems[index].status),
         priorityColor:
             AppColor.getPrioritiesColors(selectedItems[index].priority),
-        deleteTaskCallBack: () {
+        deleteTaskCallBack: (taskId) {
           deleteTask(selectedItems[index].taskId);
         },
         onItemPressed: () => AppNavigator.navigateToTaskDetails(
@@ -43,8 +43,11 @@ class TasksScreenBody extends StatelessWidget {
           if (value is TaskModel) {
             print('value.status: ${value.status}');
             updateToTasksList(value);
+          } else if (value is String) {
+            deleteTask(value);
           }
         }),
+        ifImageExist: selectedItems[index].isImageExist,
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
@@ -22,6 +24,7 @@ class TasksCubit extends Cubit<TasksState> {
   int selectedTaskTypeIndex = 0;
   bool isSelectedType = false;
   List<TaskModel> tasks = [];
+  bool isImageExist = false;
 
   Future<void> fetchAllTasks() async {
     emit(TasksLoadingState());
@@ -69,6 +72,15 @@ class TasksCubit extends Cubit<TasksState> {
       default:
         return [];
     }
+  }
+
+  bool ifImageExist(String imagePath) {
+    isImageExist = false;
+    File(imagePath).exists().then((value) {
+      isImageExist = value;
+      emit(IsImageExistState());
+    });
+    return isImageExist;
   }
 
   Future<void> deleteTask(String taskId) async {
