@@ -17,7 +17,7 @@ class PhoneNumberInputWidget extends StatelessWidget {
       controller: phoneController,
       isCountryButtonPersistent: true,
       countrySelectorNavigator: selectorNavigator,
-
+      cursorColor: AppColor.mainColor,
       validator: _getValidator(context),
       autovalidateMode: AutovalidateMode.disabled,
       decoration: const InputDecoration(
