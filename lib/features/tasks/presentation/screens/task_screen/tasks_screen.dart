@@ -5,10 +5,11 @@ import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
+import 'package:tasky/features/tasks/presentation/widgets/no_data_screen.dart';
+import 'package:tasky/features/tasks/presentation/widgets/tasks_screen_body.dart';
 import 'package:tasky/features/tasks/presentation/widgets/tasks_selection_chips.dart';
 
 import '../../../../../core/di/di.dart';
-import '../../widgets/task_item.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -69,31 +70,21 @@ class TasksScreen extends StatelessWidget {
                           chipsItems: cubit.taskTypeItems,
                           selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
                           onChipPressed: cubit.onTaskTypeSelected),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: cubit.getSelectedItems().length,
-                          itemBuilder: (context, index) => TaskItem(
-                            task: cubit.getSelectedItems()[index],
-                            statusColors: AppColor.getStatusColors(
-                                cubit.getSelectedItems()[index].status),
-                            priorityColor: AppColor.getPrioritiesColors(
-                                cubit.getSelectedItems()[index].priority),
-                            deleteTaskCallBack: () {
-                              cubit.deleteTask(
-                                  cubit.getSelectedItems()[index].taskId);
-                            },
-                            onItemPressed: () =>
-                                AppNavigator.navigateToTaskDetails(context,
-                                        cubit.getSelectedItems()[index].taskId)
-                                    .then((value) {
-                              if (value is TaskModel) {
-                                print('value.status: ${value.status}');
-                                cubit.updateToTasksList(value);
-                              }
-                            }),
-                          ),
-                        ),
-                      ),
+                      cubit.getSelectedItems().isEmpty
+                          ? NoTasksScreen(
+                              cubit.selectedTaskTypeIndex,
+                            )
+                          : Expanded(
+                              child: TasksScreenBody(
+                                  taskTypeItems: cubit.taskTypeItems,
+                                  selectedItems: cubit.getSelectedItems(),
+                                  selectedTaskTypeIndex:
+                                      cubit.selectedTaskTypeIndex,
+                                  onTaskTypeSelected: cubit.onTaskTypeSelected,
+                                  deleteTask: cubit.deleteTask,
+                                  updateToTasksList: cubit.updateToTasksList,
+                                  addToTasksList: cubit.addToTasksList),
+                            ),
                     ],
                   ),
                 ),
