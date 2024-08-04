@@ -15,6 +15,8 @@ abstract interface class TaskApiServiceI {
   Future<Response> editTask(TaskDto task);
 
   Future<Response> deleteTask(String taskId);
+
+  Future<Response> uploadImage(FormData formData);
 }
 
 class TaskApiService implements TaskApiServiceI {
@@ -40,4 +42,11 @@ class TaskApiService implements TaskApiServiceI {
   @override
   Future<Response> getTask(String taskId) =>
       sl<DioHelper>().get(url: '${ApiEndPoints.todos}/$taskId');
+
+  @override
+  Future<Response> uploadImage(FormData formData) =>
+      sl<DioHelper>().postWithFormData(
+        url: ApiEndPoints.uploadImage,
+        data: formData,
+      );
 }
