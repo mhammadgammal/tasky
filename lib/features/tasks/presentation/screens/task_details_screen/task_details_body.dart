@@ -39,7 +39,10 @@ class TaskDetailsBody extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Center(
               child: TaskThumbnail(
-                  ifImageExist: task.isImageExist, imagePath: task.imagePath, thumbnailSize: 150.0,),
+                ifImageExist: task.imagePath.isEmpty,
+                imagePath: task.imagePath,
+                thumbnailSize: MediaQuery.of(context).size.height * 0.5,
+              ),
             ),
             const SizedBox(
               height: 20.0,
