@@ -47,7 +47,7 @@ class TasksScreenBody extends StatelessWidget {
             deleteTask(value);
           }
         }),
-        ifImageExist: selectedItems[index].isImageExist,
+        ifImageExist: selectedItems[index].imagePath.isEmpty,
       ),
     );
   }
