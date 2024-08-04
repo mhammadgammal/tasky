@@ -12,4 +12,6 @@ class ApiEndPoints {
   static var refreshToken = 'auth/refresh-token';
 
   static var todos = 'todos';
+
+  static var uploadImage = 'upload/image';
 }
