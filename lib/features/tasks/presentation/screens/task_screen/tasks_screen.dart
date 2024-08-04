@@ -53,29 +53,31 @@ class TasksScreen extends StatelessWidget {
                     color: AppColor.mainColor,
                   ),
                 )
-              : Padding(
-                  padding:
-                      const EdgeInsetsDirectional.symmetric(horizontal: 22.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'My Tasks',
-                        style: TextStyle(
-                            color: AppColor.solidGrey,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      TasksSelectionChips(
-                          chipsItems: cubit.taskTypeItems,
-                          selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
-                          onChipPressed: cubit.onTaskTypeSelected),
-                      cubit.getSelectedItems().isEmpty
-                          ? NoTasksScreen(
-                              cubit.selectedTaskTypeIndex,
-                            )
-                          : Expanded(
-                              child: TasksScreenBody(
+              : RefreshIndicator(
+                  onRefresh: () => cubit.fetchAllTasks(),
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.symmetric(horizontal: 22.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'My Tasks',
+                          style: TextStyle(
+                              color: AppColor.solidGrey,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        TasksSelectionChips(
+                            chipsItems: cubit.taskTypeItems,
+                            selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
+                            onChipPressed: cubit.onTaskTypeSelected),
+                        cubit.getSelectedItems().isEmpty
+                            ? NoTasksScreen(
+                                cubit.selectedTaskTypeIndex,
+                              )
+                            : Expanded(
+                                child: TasksScreenBody(
                                   taskTypeItems: cubit.taskTypeItems,
                                   selectedItems: cubit.getSelectedItems(),
                                   selectedTaskTypeIndex:
@@ -84,9 +86,10 @@ class TasksScreen extends StatelessWidget {
                                   deleteTask: cubit.deleteTask,
                                   updateToTasksList: cubit.updateToTasksList,
                                   addToTasksList: cubit.addToTasksList,
-                                  ),
-                            ),
-                    ],
+                                ),
+                              ),
+                      ],
+                    ),
                   ),
                 ),
           floatingActionButton: Align(
