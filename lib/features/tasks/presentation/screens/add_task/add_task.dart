@@ -21,7 +21,10 @@ class AddNewTaskScreen extends StatelessWidget {
         if (state is TaskAddedSuccessState) {
           Navigator.pop(context, AddTaskCubit.get(context).task);
         } else if (state is TaskAddFailedState) {
-          AuthErrorDialogue(errorMessage: state.e);
+          showDialog(
+            context: context,
+            builder: (context) => AuthErrorDialogue(errorMessage: state.e),
+          );
         }
       },
       builder: (context, state) {
