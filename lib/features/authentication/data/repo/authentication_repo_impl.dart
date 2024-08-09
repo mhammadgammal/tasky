@@ -48,7 +48,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       print(
           'Error registering with code ${e.response?.statusCode!
               .toString()}: ${e.message}');
-      return ApiResponse.withError(e);
+      return ApiResponse.withError(e.response?.statusCode!);
     }
   }
 

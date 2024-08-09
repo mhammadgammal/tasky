@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
+import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/features/authentication/data/data_source/register_dto.dart';
 import 'package:tasky/features/authentication/domain/use_case/register_use_case.dart';
 
@@ -49,6 +50,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       selectedLevel = newValue;
 
   register() async {
+    emit(RegisterLoadingState());
     String phoneNumber =
         '+${phoneController.value.countryCode}${phoneController.value.nsn}';
 
@@ -64,8 +66,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
     if (apiResponse.response != null) {
       emit(RegisterSuccessState());
     } else if (apiResponse.error != null) {
-      emit(RegisterFailureState(
-          errorMessage: apiResponse.response?.data['message']));
+      ApiErrorHandler.handelErrorMessage(apiResponse.error);
+      emit(RegisterFailureState(errorMessage: apiResponse.error));
     }
   }
 
