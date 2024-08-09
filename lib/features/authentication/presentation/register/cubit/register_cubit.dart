@@ -17,7 +17,11 @@ class RegisterCubit extends Cubit<RegisterStates> {
   static RegisterCubit get(context) => BlocProvider.of(context);
 
   ExperienceLevel? selectedLevel;
-
+  final FocusNode nameNode = FocusNode();
+  FocusNode passwordNode = FocusNode();
+  FocusNode phoneNode = FocusNode();
+  FocusNode addressNode = FocusNode();
+  FocusNode yearsOfExperienceNode = FocusNode();
   var formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController yearsOfExperienceController =

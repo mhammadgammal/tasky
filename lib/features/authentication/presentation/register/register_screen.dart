@@ -6,6 +6,7 @@ import 'package:tasky/core/utils/screen_utils/screen_util.dart';
 import 'package:tasky/core/widgets/auth_error_dialogue.dart';
 import 'package:tasky/core/widgets/default_form_field.dart';
 import 'package:tasky/core/widgets/phone_number_input_widget.dart';
+import 'package:tasky/core/widgets/shimmer_loading.dart';
 import 'package:tasky/core/widgets/tasky_button.dart';
 import 'package:tasky/features/authentication/presentation/register/cubit/register_cubit.dart';
 
@@ -23,7 +24,10 @@ class RegisterScreen extends StatelessWidget {
         if (state is RegisterSuccessState) {
           AppNavigator.navigateAndFinishToLogin(context);
         } else if (state is RegisterFailureState) {
-          showDialog(context: context, builder: (context) => AuthErrorDialogue(errorMessage: state.errorMessage));
+          showDialog(
+              context: context,
+              builder: (context) =>
+                  AuthErrorDialogue(errorMessage: state.errorMessage));
         }
       },
       builder: (context, state) {
@@ -59,26 +63,39 @@ class RegisterScreen extends StatelessWidget {
                             height: 20.0,
                           ),
                           DefaultFormFiled(
-                              controller: cubit.nameController,
-                              inputType: TextInputType.name,
-                              fieldLabel: 'Name',
-                              icon: null,
-                              validate: cubit.validateName),
+                            focusNode: cubit.nameNode,
+                            controller: cubit.nameController,
+                            inputType: TextInputType.name,
+                            fieldLabel: 'Name',
+                            icon: null,
+                            validate: cubit.validateName,
+                            onSubmit: (_) => FocusScope.of(context)
+                                .requestFocus(cubit.phoneNode),
+                          ),
                           const SizedBox(
                             height: 20.0,
                           ),
                           PhoneNumberInputWidget(
-                              phoneController: cubit.phoneController,
-                              selectorNavigator: cubit.selectorNavigator),
+                            phoneNode: cubit.phoneNode,
+                            focus: false,
+                            phoneController: cubit.phoneController,
+                            selectorNavigator: cubit.selectorNavigator,
+                            onEditComplete: () => FocusScope.of(context)
+                                .requestFocus(cubit.yearsOfExperienceNode),
+                          ),
                           const SizedBox(
                             height: 20.0,
                           ),
                           DefaultFormFiled(
-                              controller: cubit.yearsOfExperienceController,
-                              inputType: TextInputType.name,
-                              fieldLabel: 'Years Of Experience',
-                              icon: null,
-                              validate: null),
+                            focusNode: cubit.yearsOfExperienceNode,
+                            controller: cubit.yearsOfExperienceController,
+                            inputType: TextInputType.name,
+                            fieldLabel: 'Years Of Experience',
+                            icon: null,
+                            validate: null,
+                            onSubmit: (_) => FocusScope.of(context)
+                                .requestFocus(cubit.addressNode),
+                          ),
                           const SizedBox(
                             height: 20.0,
                           ),
@@ -106,36 +123,50 @@ class RegisterScreen extends StatelessWidget {
                             height: 20.0,
                           ),
                           DefaultFormFiled(
-                              controller: cubit.addressController,
-                              inputType: TextInputType.name,
-                              fieldLabel: 'Address...',
-                              icon: null,
-                              validate: cubit.validateAddress),
+                            focusNode: cubit.addressNode,
+                            controller: cubit.addressController,
+                            inputType: TextInputType.name,
+                            fieldLabel: 'Address...',
+                            icon: null,
+                            validate: cubit.validateAddress,
+                            onSubmit: (_) => FocusScope.of(context)
+                                .requestFocus(cubit.passwordNode),
+                          ),
                           const SizedBox(
                             height: 20.0,
                           ),
                           DefaultFormFiled(
-                              controller: cubit.passwordController,
-                              inputType: TextInputType.visiblePassword,
-                              fieldLabel: 'Password',
-                              icon: null,
-                              obSecure: cubit.isVisibility,
-                              maxLines: 1,
-                              suffixIcon: IconButton(
-                                  onPressed: () =>
-                                      cubit.changePasswordVisibility(),
-                                  icon: Icon(
-                                    cubit.isVisibility
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                    color: AppColor.lightGrey,
-                                  )),
-                              validate: cubit.validatePasswordField),
+                            focusNode: cubit.passwordNode,
+                            controller: cubit.passwordController,
+                            inputType: TextInputType.visiblePassword,
+                            fieldLabel: 'Password',
+                            icon: null,
+                            obSecure: cubit.isVisibility,
+                            maxLines: 1,
+                            suffixIcon: IconButton(
+                                onPressed: () =>
+                                    cubit.changePasswordVisibility(),
+                                icon: Icon(
+                                  cubit.isVisibility
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: AppColor.lightGrey,
+                                )),
+                            validate: cubit.validatePasswordField,
+                            onSubmit: (_) =>
+                                cubit.formKey.currentState!.validate()
+                                    ? cubit.register()
+                                    : null,
+                          ),
                           const SizedBox(
                             height: 25.0,
                           ),
-                          TaskyButton(
-                              onButtonPressed: () =>
+                          state is RegisterLoadingState
+                              ? const ShimmerLoading(
+                                  height: 50.0,
+                                )
+                              : TaskyButton(
+                                  onButtonPressed: () =>
                                   cubit.formKey.currentState!.validate()
                                       ? cubit.register()
                                       : null,
@@ -149,8 +180,8 @@ class RegisterScreen extends StatelessWidget {
                             children: [
                               const Text(
                                 'Already have any account?',
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 17.0),
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 17.0),
                               ),
                               TextButton(
                                   onPressed: () =>
