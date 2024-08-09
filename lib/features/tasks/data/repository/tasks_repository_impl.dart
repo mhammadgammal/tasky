@@ -72,9 +72,9 @@ class TasksRepositoryImpl implements TasksRepository {
   }
 
   @override
-  Future<ApiResponse> getAllTasks() async {
+  Future<ApiResponse> getAllTasks(int pageNumber) async {
     try {
-      var response = await _apiService.getAllTasks();
+      var response = await _apiService.getAllTasks(pageNumber);
       print('all tasks response: ${response.data}');
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {

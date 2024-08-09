@@ -5,8 +5,7 @@ import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
-import 'package:tasky/features/tasks/presentation/widgets/no_data_screen.dart';
-import 'package:tasky/features/tasks/presentation/widgets/tasks_screen_body.dart';
+import 'package:tasky/features/tasks/presentation/widgets/tasks_layout.dart';
 import 'package:tasky/features/tasks/presentation/widgets/tasks_selection_chips.dart';
 
 import '../../../../../core/di/di.dart';
@@ -47,51 +46,36 @@ class TasksScreen extends StatelessWidget {
               ),
             ],
           ),
-          body: state is TasksLoadingState
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColor.mainColor,
-                  ),
-                )
-              : RefreshIndicator(
-                  onRefresh: () => cubit.fetchAllTasks(),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.symmetric(horizontal: 22.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'My Tasks',
-                          style: TextStyle(
-                              color: AppColor.solidGrey,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        TasksSelectionChips(
-                            chipsItems: cubit.taskTypeItems,
-                            selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
-                            onChipPressed: cubit.onTaskTypeSelected),
-                        cubit.getSelectedItems().isEmpty
-                            ? NoTasksScreen(
-                                cubit.selectedTaskTypeIndex,
-                              )
-                            : Expanded(
-                                child: TasksScreenBody(
-                                  taskTypeItems: cubit.taskTypeItems,
-                                  selectedItems: cubit.getSelectedItems(),
-                                  selectedTaskTypeIndex:
-                                      cubit.selectedTaskTypeIndex,
-                                  onTaskTypeSelected: cubit.onTaskTypeSelected,
-                                  deleteTask: cubit.deleteTask,
-                                  updateToTasksList: cubit.updateToTasksList,
-                                  addToTasksList: cubit.addToTasksList,
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
+          body: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 22.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'My Tasks',
+                  style: TextStyle(
+                      color: AppColor.solidGrey,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold),
                 ),
+                TasksSelectionChips(
+                    chipsItems: cubit.taskTypeItems,
+                    selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
+                    onChipPressed: cubit.onTaskTypeSelected),
+                Expanded(
+                  child: TasksLayout(
+                      taskTypeItems: cubit.taskTypeItems,
+                      selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
+                      pagingController: cubit.pageController,
+                      onTaskTypeSelected: cubit.onTaskTypeSelected,
+                      deleteTask: cubit.deleteTask,
+                      updateToTasksList: cubit.updateToTasksList,
+                      addToTasksList: cubit.addToTasksList,
+                      fetchAllTasks: cubit.fetchAllTasks),
+                ),
+              ],
+            ),
+          ),
           floatingActionButton: Align(
             alignment: Alignment.bottomRight,
             child: Container(

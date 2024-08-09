@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
 import 'package:tasky/core/utils/api_utils/token_util.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
@@ -16,7 +17,10 @@ class TasksCubit extends Cubit<TasksState> {
   final DeleteTaskUseCase _deleteTaskUseCase;
 
   TasksCubit(this._getAllTasksUseCase, this._deleteTaskUseCase)
-      : super(TasksInitial());
+      : super(TasksInitial()) {
+    pageController = PagingController(firstPageKey: 0);
+    pageController.addPageRequestListener((pageKey) => fetchAllTasks(pageKey));
+  }
 
   static TasksCubit get(context) => BlocProvider.of(context);
 
@@ -25,12 +29,19 @@ class TasksCubit extends Cubit<TasksState> {
   bool isSelectedType = false;
   List<TaskModel> tasks = [];
   bool isImageExist = false;
+  late final PagingController<int, TaskModel> pageController;
 
-  Future<void> fetchAllTasks() async {
+  Future<void> fetchAllTasks(int pageNumber) async {
     emit(TasksLoadingState());
-    var result = await _getAllTasksUseCase.perform();
-    result.fold((tasks) {
-      this.tasks = tasks;
+    var pageResult =
+        await _getAllTasksUseCase.perform(PageNumberParameter(pageNumber));
+    pageResult.fold((tasks) {
+      if (tasks.isEmpty) {
+        pageController.appendLastPage(tasks);
+      } else {
+        pageController.appendPage(tasks, pageNumber + 1);
+      }
+      this.tasks = pageController.itemList ?? [];
       emit(TasksLoadSuccessState());
     }, (errorCode) {
       if (errorCode == 401) {
@@ -86,7 +97,7 @@ class TasksCubit extends Cubit<TasksState> {
   Future<void> deleteTask(String taskId) async {
     var result = await _deleteTaskUseCase.perform(TaskIdParameter(taskId));
     result.fold((_) {
-      tasks.removeWhere((task) => task.taskId == taskId);
+      pageController.itemList!.removeWhere((task) => task.taskId == taskId);
       emit(TaskDeletedSuccessfullyState());
     }, (error) {
       emit(TaskDeletedFailedState());

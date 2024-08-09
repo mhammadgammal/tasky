@@ -32,7 +32,11 @@ class RegisterParameter extends BaseParameter {
   );
 }
 
-class TasksParameter extends BaseParameter {}
+class PageNumberParameter extends BaseParameter {
+  int pageNumber;
+
+  PageNumberParameter(this.pageNumber);
+}
 
 class TaskIdParameter extends BaseParameter {
   late String taskId;

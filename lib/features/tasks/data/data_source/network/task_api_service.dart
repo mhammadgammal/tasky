@@ -6,7 +6,7 @@ import '../../../../../core/di/di.dart';
 import '../dto/task_dto.dart';
 
 abstract interface class TaskApiServiceI {
-  Future<Response> getAllTasks();
+  Future<Response> getAllTasks(int pageNumber);
 
   Future<Response> getTask(String taskId);
 
@@ -36,8 +36,8 @@ class TaskApiService implements TaskApiServiceI {
       url: '${ApiEndPoints.todos}/${task.taskId}', data: task.toJsonEdit());
 
   @override
-  Future<Response> getAllTasks() =>
-      sl<DioHelper>().get(url: ApiEndPoints.todos);
+  Future<Response> getAllTasks(int pageNumber) =>
+      sl<DioHelper>().get(url: '${ApiEndPoints.todos}?page=$pageNumber');
 
   @override
   Future<Response> getTask(String taskId) =>
