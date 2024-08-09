@@ -1,5 +1,6 @@
-import '../theme/app_color.dart';
 import 'package:flutter/material.dart';
+
+import '../theme/app_color.dart';
 
 class DefaultFormFiled extends StatefulWidget {
   const DefaultFormFiled({
@@ -19,6 +20,9 @@ class DefaultFormFiled extends StatefulWidget {
     this.textFieldTextColor = Colors.black,
     this.onChanged,
     this.cursorColor = Colors.deepPurple,
+    this.autoFocus = false,
+    this.focusNode,
+    this.onSubmit,
   });
 
   final TextEditingController controller;
@@ -36,6 +40,9 @@ class DefaultFormFiled extends StatefulWidget {
   final Color iconColor;
   final Color textFieldTextColor;
   final Color cursorColor;
+  final bool autoFocus;
+  final FocusNode? focusNode;
+  final void Function(String?)? onSubmit;
 
   @override
   State<DefaultFormFiled> createState() => _DefaultFormFiledState();
@@ -45,6 +52,8 @@ class _DefaultFormFiledState extends State<DefaultFormFiled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: widget.autoFocus,
+      focusNode: widget.focusNode,
       controller: widget.controller,
       keyboardType: widget.inputType,
       style: TextStyle(color: widget.textFieldTextColor),
@@ -62,14 +71,12 @@ class _DefaultFormFiledState extends State<DefaultFormFiled> {
             borderSide: const BorderSide(color: Colors.grey, width: 1.5)),
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(
-                color: AppColor.lightGrey, width: 1.5)),
+            borderSide:
+                const BorderSide(color: AppColor.lightGrey, width: 1.5)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(
-              color: AppColor.mainColor,
-              style: BorderStyle.solid,
-              width: 3.0),
+              color: AppColor.mainColor, style: BorderStyle.solid, width: 3.0),
         ),
       ),
       maxLines: widget.maxLines,
@@ -79,6 +86,7 @@ class _DefaultFormFiledState extends State<DefaultFormFiled> {
       obscureText: widget.obSecure,
       onChanged: widget.onChanged,
       validator: widget.validate,
+      onFieldSubmitted: widget.onSubmit,
     );
   }
 }

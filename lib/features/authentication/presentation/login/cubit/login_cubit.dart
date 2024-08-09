@@ -16,6 +16,9 @@ class LoginCubit extends Cubit<LoginStates> {
 
   var formKey = GlobalKey<FormState>();
 
+  FocusNode passwordNode = FocusNode();
+  FocusNode phoneNode = FocusNode();
+
   LoginCubit(this._loginUseCase) : super(LoginInitState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
@@ -61,5 +64,13 @@ class LoginCubit extends Cubit<LoginStates> {
     phoneController.dispose();
     passwordController.dispose();
     return super.close();
+  }
+
+  void onSubmit(String p1) {
+    print('on submit');
+  }
+
+  void onSave(PhoneNumber? p1) {
+    print('on save');
   }
 }

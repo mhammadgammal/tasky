@@ -8,6 +8,7 @@ import 'package:tasky/core/utils/screen_utils/screen_util.dart';
 import 'package:tasky/core/widgets/auth_error_dialogue.dart';
 import 'package:tasky/core/widgets/default_form_field.dart';
 import 'package:tasky/core/widgets/phone_number_input_widget.dart';
+import 'package:tasky/core/widgets/shimmer_loading.dart';
 import 'package:tasky/core/widgets/tasky_button.dart';
 import 'package:tasky/features/authentication/presentation/login/cubit/login_cubit.dart';
 
@@ -56,44 +57,55 @@ class LoginScreen extends StatelessWidget {
                           style: AppTextStyle.font30BlackWBody,
                         ),
                         PhoneNumberInputWidget(
-                            phoneController: cubit.phoneController,
-                            selectorNavigator: cubit.selectorNavigator),
+                          phoneNode: cubit.phoneNode,
+                          focus: true,
+                          phoneController: cubit.phoneController,
+                          selectorNavigator: cubit.selectorNavigator,
+                          onEditComplete: () => FocusScope.of(context)
+                              .requestFocus(cubit.passwordNode),
+                        ),
                         const SizedBox(
                           height: 20.0,
                         ),
                         DefaultFormFiled(
-                            controller: cubit.passwordController,
-                            inputType: TextInputType.visiblePassword,
-                            fieldLabel: 'Password',
-                            icon: null,
-                            obSecure: cubit.isVisibility,
-                            maxLines: 1,
-                            suffixIcon: IconButton(
-                                onPressed: () =>
-                                    cubit.changePasswordVisibility(),
-                                icon: Icon(
-                                  cubit.isVisibility
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: AppColor.lightGrey,
-                                )),
-                            validate: cubit.validatePasswordField),
+                          focusNode: cubit.passwordNode,
+                          controller: cubit.passwordController,
+                          inputType: TextInputType.visiblePassword,
+                          fieldLabel: 'Password',
+                          icon: null,
+                          obSecure: cubit.isVisibility,
+                          maxLines: 1,
+                          suffixIcon: IconButton(
+                              onPressed: () => cubit.changePasswordVisibility(),
+                              icon: Icon(
+                                cubit.isVisibility
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: AppColor.lightGrey,
+                              )),
+                          validate: cubit.validatePasswordField,
+                          onSubmit: (_) => cubit.login(),
+                        ),
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 15.0,
                   ),
-                  TaskyButton(
-                      onButtonPressed: () =>
-                          cubit.formKey.currentState!.validate()
-                              ? cubit.login()
-                              : null,
-                      horizontalPadding: 12.0,
-                      content: const Text(
-                        "Sign In",
-                        style: AppTextStyle.font20whiteBold,
-                      )),
+                  state is LoginLoadingState
+                      ? const ShimmerLoading(
+                          height: 50.0,
+                        )
+                      : TaskyButton(
+                          onButtonPressed: () =>
+                              cubit.formKey.currentState!.validate()
+                                  ? cubit.login()
+                                  : null,
+                          horizontalPadding: 12.0,
+                          content: const Text(
+                            "Sign In",
+                            style: AppTextStyle.font20whiteBold,
+                          )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

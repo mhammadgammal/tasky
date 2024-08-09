@@ -6,20 +6,32 @@ class PhoneNumberInputWidget extends StatelessWidget {
   const PhoneNumberInputWidget(
       {super.key,
       required this.phoneController,
-      required this.selectorNavigator});
+      required this.selectorNavigator,
+      this.phoneNode,
+      this.focus = false,
+      this.onSubmitted,
+      this.onSaved,
+      this.onEditComplete});
 
   final PhoneController phoneController;
   final CountrySelectorNavigator selectorNavigator;
-
+  final FocusNode? phoneNode;
+  final bool focus;
+  final void Function(String)? onSubmitted;
+  final void Function(PhoneNumber?)? onSaved;
+  final void Function()? onEditComplete;
   @override
   Widget build(BuildContext context) {
     return PhoneFormField(
+      focusNode: phoneNode,
+      autofocus: focus,
       controller: phoneController,
       isCountryButtonPersistent: true,
       countrySelectorNavigator: selectorNavigator,
       cursorColor: AppColor.mainColor,
       validator: _getValidator(context),
       autovalidateMode: AutovalidateMode.disabled,
+      onEditingComplete: onEditComplete,
       decoration: const InputDecoration(
         hintText: '123-456-7890',
         border: OutlineInputBorder(
