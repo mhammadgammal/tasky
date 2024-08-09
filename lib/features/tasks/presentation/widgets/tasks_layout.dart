@@ -7,34 +7,34 @@ import 'tasks_screen_body.dart';
 class TasksLayout extends StatelessWidget {
   const TasksLayout(
       {super.key,
-      required this.taskTypeItems,
       required this.selectedTaskTypeIndex,
       required this.pagingController,
       required this.onTaskTypeSelected,
       required this.deleteTask,
       required this.updateToTasksList,
       required this.addToTasksList,
-      required this.fetchAllTasks});
+      required this.fetchAllTasks,
+      required this.selectedItems});
 
-  final List<String> taskTypeItems;
   final int selectedTaskTypeIndex;
   final PagingController<int, TaskModel> pagingController;
-  final Function(int) fetchAllTasks;
+  final Function(int, bool) fetchAllTasks;
   final Function(bool, int) onTaskTypeSelected;
   final Function(String) deleteTask;
   final Function(TaskModel) updateToTasksList;
   final Function(TaskModel) addToTasksList;
+  final List<TaskModel> selectedItems;
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () => fetchAllTasks(1),
+      onRefresh: () => fetchAllTasks(1, true),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: TasksScreenBody(
-              taskTypeItems: taskTypeItems,
+              selectedItems: selectedItems,
               selectedTaskTypeIndex: selectedTaskTypeIndex,
               onTaskTypeSelected: onTaskTypeSelected,
               deleteTask: deleteTask,

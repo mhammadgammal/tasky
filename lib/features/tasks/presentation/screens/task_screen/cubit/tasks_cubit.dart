@@ -31,17 +31,21 @@ class TasksCubit extends Cubit<TasksState> {
   bool isImageExist = false;
   late final PagingController<int, TaskModel> pageController;
 
-  Future<void> fetchAllTasks(int pageNumber) async {
+  Future<void> fetchAllTasks(int pageNumber,
+      {bool isRefreshing = false}) async {
     emit(TasksLoadingState());
     var pageResult =
         await _getAllTasksUseCase.perform(PageNumberParameter(pageNumber));
     pageResult.fold((tasks) {
       if (tasks.isEmpty) {
         pageController.appendLastPage(tasks);
+      } else if (isRefreshing) {
+        pageController.itemList = tasks;
       } else {
         pageController.appendPage(tasks, pageNumber + 1);
       }
       this.tasks = pageController.itemList ?? [];
+      pageController.itemList = getSelectedItems();
       emit(TasksLoadSuccessState());
     }, (errorCode) {
       if (errorCode == 401) {
@@ -55,6 +59,7 @@ class TasksCubit extends Cubit<TasksState> {
   void onTaskTypeSelected(bool isSelected, int selectedIndex) {
     isSelectedType = isSelected;
     selectedTaskTypeIndex = selectedIndex;
+    pageController.itemList = getSelectedItems();
     emit(TaskTypeChanged());
   }
 

@@ -64,14 +64,15 @@ class TasksScreen extends StatelessWidget {
                     onChipPressed: cubit.onTaskTypeSelected),
                 Expanded(
                   child: TasksLayout(
-                      taskTypeItems: cubit.taskTypeItems,
                       selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
                       pagingController: cubit.pageController,
+                      selectedItems: cubit.getSelectedItems(),
                       onTaskTypeSelected: cubit.onTaskTypeSelected,
                       deleteTask: cubit.deleteTask,
                       updateToTasksList: cubit.updateToTasksList,
                       addToTasksList: cubit.addToTasksList,
-                      fetchAllTasks: cubit.fetchAllTasks),
+                      fetchAllTasks: (pageNumber, isRefresh) => cubit
+                          .fetchAllTasks(pageNumber, isRefreshing: isRefresh)),
                 ),
               ],
             ),
@@ -87,6 +88,7 @@ class TasksScreen extends StatelessWidget {
                     width: 50.0,
                     height: 50.0,
                     child: FloatingActionButton(
+                      key: UniqueKey(),
                       onPressed: () {
                         /* Action 1 */
                         AppNavigator.navigateToQrCode(context).then((value) {
@@ -108,6 +110,7 @@ class TasksScreen extends StatelessWidget {
                     width: 64.0,
                     height: 64.0,
                     child: FloatingActionButton(
+                      key: UniqueKey(),
                       shape: const CircleBorder(eccentricity: 1.0),
                       onPressed: () =>
                           AppNavigator.navigateToAddTask(context).then((value) {

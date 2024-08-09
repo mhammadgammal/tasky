@@ -12,7 +12,7 @@ import '../../domain/entity/task_model.dart';
 class TasksScreenBody extends StatelessWidget {
   const TasksScreenBody({
     super.key,
-    required this.taskTypeItems,
+    required this.selectedItems,
     required this.selectedTaskTypeIndex,
     required this.onTaskTypeSelected,
     required this.deleteTask,
@@ -22,8 +22,7 @@ class TasksScreenBody extends StatelessWidget {
     required this.selectedItemIndex,
   });
 
-  final List<String> taskTypeItems;
-
+  final List<TaskModel> selectedItems;
   final int selectedItemIndex;
   final int selectedTaskTypeIndex;
   final PagingController<int, TaskModel> pagingController;
@@ -47,25 +46,34 @@ class TasksScreenBody extends StatelessWidget {
           ),
           noItemsFoundIndicatorBuilder: (context) =>
               NoTasksScreen(selectedItemIndex),
-          itemBuilder: (context, item, index) => TaskItem(
-            task: item,
-            statusColors: AppColor.getStatusColors(item.status),
-            priorityColor: AppColor.getPrioritiesColors(item.priority),
-            deleteTaskCallBack: (taskId) {
-              deleteTask(item.taskId);
-            },
-            onItemPressed: () =>
-                AppNavigator.navigateToTaskDetails(context, item.taskId)
-                    .then((value) {
-              if (value is TaskModel) {
-                print('value.status: ${value.status}');
-                updateToTasksList(value);
-              } else if (value is String) {
-                deleteTask(value);
-              }
-            }),
-            ifImageExist: item.imagePath.isEmpty,
-          ),
+          itemBuilder: (context, _, index) => index > selectedItems.length
+              ? Divider(
+                  height: 10.0,
+                  color: Colors.grey,
+                  indent: ScreenUtil.getScreenWidth(context) * 0.5,
+                  endIndent: ScreenUtil.getScreenWidth(context) * 0.5,
+                )
+              : TaskItem(
+                  task: selectedItems[index],
+                  statusColors:
+                      AppColor.getStatusColors(selectedItems[index].status),
+                  priorityColor: AppColor.getPrioritiesColors(
+                      selectedItems[index].priority),
+                  deleteTaskCallBack: (taskId) {
+                    deleteTask(selectedItems[index].taskId);
+                  },
+                  onItemPressed: () => AppNavigator.navigateToTaskDetails(
+                          context, selectedItems[index].taskId)
+                      .then((value) {
+                    if (value is TaskModel) {
+                      print('value.status: ${value.status}');
+                      updateToTasksList(value);
+                    } else if (value is String) {
+                      deleteTask(value);
+                    }
+                  }),
+                  ifImageExist: selectedItems[index].imagePath.isEmpty,
+                ),
         ));
   }
 }
