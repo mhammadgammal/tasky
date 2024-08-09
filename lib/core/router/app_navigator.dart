@@ -12,7 +12,8 @@ class AppNavigator {
       Navigator.pushNamed(context, RouterHelper.register);
 
   static Future<void> navigateToTasks(BuildContext context) =>
-      Navigator.pushReplacementNamed(context, RouterHelper.home);
+      Navigator.pushNamedAndRemoveUntil(context, RouterHelper.home,
+          ModalRoute.withName(RouterHelper.boarding));
 
   static Future<dynamic> navigateToAddTask(BuildContext context) =>
       Navigator.pushNamed(context, RouterHelper.addTask);
