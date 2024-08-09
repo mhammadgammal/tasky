@@ -42,7 +42,7 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
   }
 
   void onStatusChanged(String? value) {
-    if (selectedStatus == value) {
+    if (selectedStatus != value) {
       isChanged = true;
     }
     selectedStatus = value;
@@ -50,7 +50,7 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
   }
 
   void onPriorityChanged(String? value) {
-    if (selectedPriority == value) {
+    if (selectedPriority != value) {
       isChanged = true;
     }
     selectedPriority = value;
