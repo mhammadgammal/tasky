@@ -104,7 +104,7 @@ class RegisterScreen extends StatelessWidget {
                             onChanged: cubit.onExperienceLevelChanged,
                             decoration: InputDecoration(
                               labelText: 'Choose experience level',
-                              labelStyle: TextStyle(color: Colors.black),
+                              labelStyle: const TextStyle(color: Colors.black),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ), // Add a border
