@@ -15,8 +15,8 @@ final class AppTextStyle {
       TextStyle(color: Colors.white, fontSize: 17.5);
   static const font175WhiteBold = TextStyle(
       color: Colors.white, fontSize: 17.5, fontWeight: FontWeight.bold);
-  static const fontt20RedNormal = TextStyle(color: Colors.red, fontSize: 20.0);
-  static const font15GreyNoramlComment =
+  static const font20RedNormal = TextStyle(color: Colors.red, fontSize: 20.0);
+  static const font15GreyNormalComment =
       TextStyle(color: Colors.grey, fontSize: 15.0);
   static const font30WhiteBoldBody = TextStyle(
     fontSize: 30.0,

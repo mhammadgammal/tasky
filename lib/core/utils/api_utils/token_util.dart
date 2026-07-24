@@ -6,7 +6,7 @@ import 'package:tasky/core/cache/cache_keys.dart';
 import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/utils/api_utils/api_end_points.dart';
 import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
-import 'package:tasky/core/utils/api_utils/dio_helper.dart';
+import 'package:tasky/core/network/dio_helper.dart';
 import 'package:tasky/core/widgets/session_ended_dialogue.dart';
 import 'package:tasky/core/widgets/show_toast.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
@@ -41,12 +41,10 @@ abstract class TokenUtil {
         if (e.response?.statusCode == 401) {
           // Handle unauthorized
           showDialog(
-              context: sl<BuildContext>(),
+              context: AppNavigator.navigatorKey.currentContext!,
               builder: (context) => const SessionEndedDialogue(
                   errorMessage: 'Session Ended, Please Resign in'));
-          await logout()
-              ? AppNavigator.navigateAndFinishToLogin(sl<BuildContext>())
-              : null;
+          await logout() ? AppNavigator.navigateAndFinishToLogin() : null;
           return '';
         } else if (e.response?.statusCode == 403) {
           // Handle forbidden
@@ -67,7 +65,7 @@ abstract class TokenUtil {
       String refreshToken) async {
     print('Performing refresh token');
     return await sl<DioHelper>()
-        .get(url: ApiEndPoints.refreshToken, query: {'token': refreshToken});
+        .get(ApiEndPoints.refreshToken, query: {'token': refreshToken});
   }
 
   static Future<bool> setToken(String token) async =>

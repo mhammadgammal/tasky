@@ -46,8 +46,7 @@ class TasksScreenBody extends StatelessWidget {
         priorityColor: AppColor.getPrioritiesColors(item.priority),
         deleteTaskCallBack: (taskId) => deleteTask(item.taskId),
         onItemPressed: () =>
-            AppNavigator.navigateToTaskDetails(context, item.taskId)
-                .then((value) {
+            AppNavigator.navigateToTaskDetails(item.taskId).then((value) {
           if (value is TaskModel) {
             updateToTasksList(value);
           } else if (value is String) {

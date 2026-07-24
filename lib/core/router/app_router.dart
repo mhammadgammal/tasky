@@ -17,7 +17,7 @@ import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/task
 import 'package:tasky/features/tasks/presentation/screens/task_screen/tasks_screen.dart';
 import 'package:tasky/features/tasks/presentation/widgets/qr_code_scanner.dart';
 
-class AppRouter {
+abstract class AppRouter {
   static final Map<String, WidgetBuilder> generateRoutes = {
     RouterHelper.boarding: (_) => const BoardingScreen(),
     RouterHelper.qrCodeScanner: (_) => const QrCodeScanner(),

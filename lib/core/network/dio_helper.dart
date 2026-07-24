@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:tasky/core/utils/api_utils/token_util.dart';
 
-import 'api_end_points.dart';
+import '../utils/api_utils/api_end_points.dart';
 
 class DioHelper {
   final Dio _dio;
 
   DioHelper(this._dio) {
-    print('initializing dio');
     _init();
   }
 
@@ -15,12 +14,10 @@ class DioHelper {
     _dio.options.baseUrl = ApiEndPoints.baseUrl;
   }
 
-  Future<Response> get({
-    required String url,
+  Future<Response> get(String url,{
     Map<String, dynamic>? query,
   }) async {
     bool isRefresh = (url == ApiEndPoints.refreshToken);
-    print('is refresh token: $url $isRefresh');
     if (!isRefresh) {
       _dio.options.headers = {
         "Content-Type": "application/json",
@@ -30,8 +27,7 @@ class DioHelper {
     return await _dio.get(url, queryParameters: query);
   }
 
-  Future<Response> post({
-    required String url,
+  Future<Response> post(String url,{
     Map<String, dynamic>? query,
     required dynamic data,
   }) async {
@@ -42,8 +38,7 @@ class DioHelper {
     return await _dio.post(url, queryParameters: query, data: data);
   }
 
-  Future<Response> postWithFormData({
-    required String url,
+  Future<Response> postWithFormData(String url,{
     Map<String, dynamic>? query,
     required dynamic data,
   }) async {
@@ -57,8 +52,7 @@ class DioHelper {
         options: Options(headers: {'Content-Type': 'multipart/form-data'}));
   }
 
-  Future<Response> put({
-    required String url,
+  Future<Response> put(String url,{
     Map<String, dynamic>? query,
     dynamic data,
   }) async {
@@ -69,8 +63,7 @@ class DioHelper {
     return await _dio.put(url, queryParameters: query, data: data);
   }
 
-  Future<Response> delete({
-    required String url,
+  Future<Response> delete(String url,{
     Map<String, dynamic>? query,
     dynamic data,
   }) async {

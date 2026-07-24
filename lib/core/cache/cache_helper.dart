@@ -1,14 +1,16 @@
+import 'dart:developer' show log;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
   final SharedPreferences _sharedPreferences;
 
   CacheHelper(this._sharedPreferences) {
-    print('Shared Preferences Init');
+    log('Shared Preferences Init');
   }
 
   Future<CacheHelper> init() async {
-    print('Shared Preferences Init Done');
+    log('Shared Preferences Init Done');
     return this;
   }
 
@@ -16,11 +18,12 @@ class CacheHelper {
           {required String key, required List<String> stringList}) =>
       _sharedPreferences.setStringList(key, stringList);
 
+  List<String>? getStringList({required String key}) =>
+      _sharedPreferences.getStringList(key);
+
   Future<bool>? putString({required String key, required String value}) async =>
       _sharedPreferences.setString(key, value);
 
-  List<String>? getStringList({required String key}) =>
-      _sharedPreferences.getStringList(key);
 
   String? getString({required String key}) => _sharedPreferences.getString(key);
 

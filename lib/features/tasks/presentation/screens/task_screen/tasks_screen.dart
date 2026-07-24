@@ -41,7 +41,7 @@ class _TasksScreenState extends State<TasksScreen> {
             ),
             actions: [
               IconButton(
-                  onPressed: () => AppNavigator.navigateToProfile(context),
+                  onPressed: () => AppNavigator.navigateToProfile(),
                   icon: const Icon(
                     Icons.person_2_outlined,
                     color: Colors.black,
@@ -50,7 +50,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 onPressed: () =>
                     sl<AuthenticationRepoImpl>().logout().then((value) {
                   if (value) {
-                    AppNavigator.navigateAndFinishToLogin(context);
+                    AppNavigator.navigateAndFinishToLogin();
                   }
                 }),
                 icon: const Icon(
@@ -111,9 +111,9 @@ class _TasksScreenState extends State<TasksScreen> {
                       key: UniqueKey(),
                       onPressed: () {
                         /* Action 1 */
-                        AppNavigator.navigateToQrCode(context).then((value) {
+                        AppNavigator.navigateToQrCode().then((value) {
                           if (value is String) {
-                            AppNavigator.navigateToTaskDetails(context, value);
+                            AppNavigator.navigateToTaskDetails(value);
                           }
                         });
                       },
@@ -133,7 +133,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       key: UniqueKey(),
                       shape: const CircleBorder(eccentricity: 1.0),
                       onPressed: () =>
-                          AppNavigator.navigateToAddTask(context).then((value) {
+                          AppNavigator.navigateToAddTask().then((value) {
                         if (value is TaskModel) {
                           cubit.addToTasksList(value);
                           _paginatableListController.refresh();

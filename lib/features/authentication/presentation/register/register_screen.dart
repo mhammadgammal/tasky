@@ -22,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is RegisterSuccessState) {
-          AppNavigator.navigateAndFinishToLogin(context);
+          AppNavigator.navigateAndFinishToLogin();
         } else if (state is RegisterFailureState) {
           showDialog(
               context: context,
@@ -185,7 +185,7 @@ class RegisterScreen extends StatelessWidget {
                               ),
                               TextButton(
                                   onPressed: () =>
-                                      AppNavigator.navigateToLogin(context),
+                                      AppNavigator.navigateToLogin(),
                                   child: const Text('Sign In'))
                             ],
                           )

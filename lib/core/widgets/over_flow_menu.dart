@@ -21,7 +21,7 @@ class OverFlowMenu extends StatelessWidget {
           case 'Edit':
             // Handle edit action
             print('edit task');
-            AppNavigator.navigateToTaskDetails(context, taskId);
+            AppNavigator.navigateToTaskDetails(taskId);
             break;
           case 'Delete':
             // Handle delete action
