@@ -24,7 +24,7 @@ class LoginCubit extends Cubit<LoginStates> {
   static LoginCubit get(context) => BlocProvider.of(context);
 
   final PhoneController phoneController = PhoneController(
-      initialValue: const PhoneNumber(isoCode: IsoCode.EG, nsn: ''));
+      initialValue: const PhoneNumber(isoCode: IsoCode.EG, nsn: '01056343345'));
   final CountrySelectorNavigator selectorNavigator =
       const CountrySelectorNavigator.page();
 

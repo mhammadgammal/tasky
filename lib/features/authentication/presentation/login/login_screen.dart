@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasky/app_context.dart';
 import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_images.dart';
 import 'package:tasky/core/theme/app_text_style.dart';
@@ -12,7 +11,6 @@ import 'package:tasky/core/widgets/shimmer_loading.dart';
 import 'package:tasky/core/widgets/tasky_button.dart';
 import 'package:tasky/features/authentication/presentation/login/cubit/login_cubit.dart';
 
-import '../../../../core/di/di.dart';
 import '../../../../core/theme/app_color.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -26,7 +24,7 @@ class LoginScreen extends StatelessWidget {
           AppNavigator.navigateToTasks();
         } else if (state is LoginFailureState) {
           showDialog(
-              context: sl<AppContext>().navigatorContext,
+              context: context,
               builder: (BuildContext context) => AuthErrorDialogue(
                     errorMessage: state.message,
                   ));
