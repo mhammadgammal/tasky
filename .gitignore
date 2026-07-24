@@ -47,3 +47,4 @@ app.*.map.json
 # .lock
 pubspec.lock
 ios/Podfile.lock
+/macos/Podfile
