@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/core/utils/screen_utils/screen_util.dart';
 import 'package:tasky/core/widgets/auth_error_dialogue.dart';
+import 'package:tasky/core/widgets/dashed_border.dart';
 import 'package:tasky/core/widgets/date_picker.dart';
 import 'package:tasky/core/widgets/default_form_field.dart';
 import 'package:tasky/core/widgets/tasky_button.dart';
@@ -51,12 +51,10 @@ class AddNewTaskScreen extends StatelessWidget {
                     cubit.imageFile == null
                         ? GestureDetector(
                             onTap: () => cubit.handleImagePick(),
-                            child: DottedBorder(
+                            child: DashedBorder(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0),
-                                borderType: BorderType.RRect,
                                 color: AppColor.mainColor,
-                                radius: const Radius.circular(12.0),
                                 child: Container(
                                   // width: ScreenUtil.getScreenWidth(context),
                                   height: ScreenUtil.getScreenHeight(context) *

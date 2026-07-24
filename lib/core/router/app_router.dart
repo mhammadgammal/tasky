@@ -30,7 +30,7 @@ class AppRouter {
           child: const RegisterScreen(),
         ),
     RouterHelper.home: (_) => BlocProvider(
-          create: (context) => TasksCubit(sl.get(), sl.get())..fetchAllTasks(1),
+          create: (context) => TasksCubit(sl.get(), sl.get()),
           child: const TasksScreen(),
         ),
     RouterHelper.addTask: (_) => BlocProvider(
