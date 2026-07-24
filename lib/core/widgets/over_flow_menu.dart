@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/core/router/app_navigator.dart';
-import 'package:tasky/core/widgets/delete_dailogue.dart';
+import 'package:tasky/core/widgets/delete_dialogue.dart';
 
 class OverFlowMenu extends StatelessWidget {
   const OverFlowMenu(
@@ -20,7 +20,6 @@ class OverFlowMenu extends StatelessWidget {
         switch (item) {
           case 'Edit':
             // Handle edit action
-            print('edit task');
             AppNavigator.navigateToTaskDetails(taskId);
             break;
           case 'Delete':
@@ -35,7 +34,6 @@ class OverFlowMenu extends StatelessWidget {
                       Navigator.pop(context);
                     }));
     
-            print('delete task');
             break;
           // Add more cases for other menu items
         }
