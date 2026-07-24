@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:tasky/core/utils/api_utils/token_util.dart';
+import 'package:tasky/core/network/token_util.dart';
 
-import '../utils/api_utils/api_end_points.dart';
+import 'api_end_points.dart';
 
 class DioHelper {
   final Dio _dio;

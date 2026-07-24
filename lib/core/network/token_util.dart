@@ -4,14 +4,14 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/cache/cache_keys.dart';
 import 'package:tasky/core/router/app_navigator.dart';
-import 'package:tasky/core/utils/api_utils/api_end_points.dart';
+import 'package:tasky/core/network/api_end_points.dart';
 import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/core/network/dio_helper.dart';
 import 'package:tasky/core/widgets/session_ended_dialogue.dart';
 import 'package:tasky/core/widgets/show_toast.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 
-import '../../di/di.dart';
+import '../di/di.dart';
 
 ///remember to add await keyword
 abstract class TokenUtil {

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:tasky/core/cache/cache_keys.dart';
-import 'package:tasky/core/utils/api_utils/api_end_points.dart';
+import 'package:tasky/core/network/api_end_points.dart';
 import 'package:tasky/core/network/dio_helper.dart';
 import 'package:tasky/features/authentication/data/data_source/register_dto.dart';
 

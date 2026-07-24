@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
-import 'package:tasky/core/utils/api_utils/token_util.dart';
+import 'package:tasky/core/network/token_util.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_all_tasks_use_case.dart';
 
