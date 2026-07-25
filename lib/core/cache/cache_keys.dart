@@ -9,4 +9,6 @@ abstract class CacheKeys {
   static const isBoarding = 'IS_BOARDING';
 
   static const firstTime = 'FIRST_TIME';
+
+  static const currentLanguage = 'CURRENT_LANGUAGE';
 }
