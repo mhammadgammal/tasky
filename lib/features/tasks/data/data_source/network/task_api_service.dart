@@ -37,7 +37,7 @@ class TaskApiService implements TaskApiServiceI {
 
   @override
   Future<Response> getAllTasks(int pageNumber) =>
-      sl<DioHelper>().get('${ApiEndPoints.todos}?page=$pageNumber');
+      sl<DioHelper>().get('${ApiEndPoints.todos}?page=1');
 
   @override
   Future<Response> getTask(String taskId) =>

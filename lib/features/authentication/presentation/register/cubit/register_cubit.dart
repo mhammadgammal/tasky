@@ -71,7 +71,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       emit(RegisterSuccessState());
     } else if (apiResponse.error != null) {
       ApiErrorHandler.handelErrorMessage(apiResponse.error);
-      emit(RegisterFailureState(errorMessage: apiResponse.error));
+      emit(RegisterFailureState(errorMessage: apiResponse.error.toString()));
     }
   }
 

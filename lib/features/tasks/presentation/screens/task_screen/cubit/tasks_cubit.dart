@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
-import 'package:tasky/core/network/token_util.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_all_tasks_use_case.dart';
 
@@ -36,9 +35,9 @@ class TasksCubit extends Cubit<TasksState> {
       return fetched.where(_matchesSelectedType).toList();
     }, (errorCode) {
       if (errorCode == 401) {
-        TokenUtil.logout().then((isLoggedOut) {
-          isLoggedOut ? emit(SessionTerminated()) : null;
-        });
+        // RefreshTokenInterceptor already cleared the session and
+        // navigated to login once the refresh attempt failed.
+        emit(SessionTerminated());
       }
       throw Exception('Failed to fetch tasks: $errorCode');
     });

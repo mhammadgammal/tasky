@@ -49,6 +49,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   infinite_scroll_pagination: ^5.1.1
   shimmer: ^3.0.0
+  pretty_dio_logger: ^1.4.0
 
 
 

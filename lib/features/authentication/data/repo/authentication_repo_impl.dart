@@ -1,8 +1,9 @@
+import 'dart:developer' show log;
+
 import 'package:dio/dio.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/cache/cache_keys.dart';
 import 'package:tasky/core/utils/api_utils/api_response.dart';
-import 'package:tasky/core/network/token_util.dart';
 import 'package:tasky/features/authentication/data/data_source/register_dto.dart';
 import 'package:tasky/features/authentication/data/network/authentication_api_sevice.dart';
 
@@ -18,20 +19,23 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
   Future<ApiResponse> login(String phone, String password) async {
     try {
       var response = await _apiSevice.login(phone, password);
-      print('AuthenticationRepoImpl: login Response ==> ${response.data}');
-      var isAccessToken =
-      await TokenUtil.setToken(response.data['access_token']);
-      print('AuthenticationRepoImpl: isAccessToken ==> $isAccessToken');
+      log('AuthenticationRepoImpl: login Response ==> ${response.data}');
+      var isAccessToken = await sl<CacheHelper>().putString(
+          key: CacheKeys.token, value: response.data['access_token']) ??
+          false;
+      log('AuthenticationRepoImpl: isAccessToken ==> $isAccessToken');
       print('AuthenticationRepoImpl: access token from sh: ${sl<CacheHelper>()
           .getString(key: CacheKeys.token)}');
 
-      var isRefreshToken =
-      await TokenUtil.setRefreshToken(response.data['refresh_token']);
-      print('AuthenticationRepoImpl: isRefreshToken ==> $isRefreshToken');
+      var isRefreshToken = await sl<CacheHelper>().putString(
+          key: CacheKeys.refreshToken,
+          value: response.data['refresh_token']) ??
+          false;
+      log('AuthenticationRepoImpl: isRefreshToken ==> $isRefreshToken');
 
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
+      log(
           'Error logging in with code ${e.response?.statusCode!.toString()}: ${e
               .message}');
       return ApiResponse.withError(e);
