@@ -17,7 +17,7 @@ import 'package:tasky/features/tasks/domain/use_case/get_all_tasks_use_case.dart
 import 'package:tasky/features/tasks/domain/use_case/get_task.dart';
 import 'package:tasky/features/tasks/domain/use_case/update_task_use_case.dart';
 
-import '../../features/authentication/data/network/authentication_api_sevice.dart';
+import '../../features/authentication/data/data_source/authentication_data_source.dart';
 import '../../features/authentication/data/repo/authentication_repo_impl.dart';
 import '../../features/tasks/domain/use_case/add_task_use_case.dart';
 
@@ -46,10 +46,10 @@ Future<void> init() async {
 
   // #authentication
 
-  sl.registerLazySingleton<AuthenticationApiSeviceImpl>(
-      () => AuthenticationApiSeviceImpl());
+  sl.registerLazySingleton<AuthenticationDataSourceImpl>(
+      () => AuthenticationDataSourceImpl(sl.get()));
   sl.registerLazySingleton<AuthenticationRepoImpl>(
-      () => AuthenticationRepoImpl(sl<AuthenticationApiSeviceImpl>()));
+      () => AuthenticationRepoImpl(sl.get()));
   sl.registerLazySingleton<LoginUseCase>(() => LoginUseCase(sl.get()));
   sl.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(sl.get()));
   // #endregion

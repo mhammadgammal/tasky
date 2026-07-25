@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../../../core/base_use_case/base_parameter.dart';
+import '../../../../../core/network/failures/failure.dart';
 import '../../../domain/use_case/login_use_case.dart';
 
 part 'login_states.dart';
@@ -32,17 +33,16 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(LoginLoadingState());
     String phoneNumber =
         '+${phoneController.value.countryCode}${phoneController.value.nsn}';
-    var apiResponse = await _loginUseCase
+    final result = await _loginUseCase
         .perform(LoginParameter(phoneNumber, passwordController.text));
-    if (apiResponse.response != null) {
-      emit(LoginSuccessState());
-    } else if (apiResponse.error != null) {
-      String errorMessage = 'An error occurred, Please try again';
-      if (apiResponse.error.response?.statusCode == 401) {
-        errorMessage = 'Wrong email or password';
-      }
-      emit(LoginFailureState(message: errorMessage));
-    }
+    result.fold(
+      (failure) => emit(LoginFailureState(
+        message: failure is UnauthorizedFailure
+            ? 'Wrong email or password'
+            : (failure.message ?? 'An error occurred, Please try again'),
+      )),
+      (_) => emit(LoginSuccessState()),
+    );
   }
 
   changePasswordVisibility() {

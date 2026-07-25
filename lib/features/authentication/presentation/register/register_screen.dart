@@ -12,7 +12,7 @@ import 'package:tasky/features/authentication/presentation/register/cubit/regist
 
 import '../../../../core/router/app_navigator.dart';
 import '../../../../core/theme/app_color.dart';
-import '../../data/data_source/register_dto.dart';
+import '../../data/model/response/register_response.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
