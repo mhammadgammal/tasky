@@ -9,7 +9,7 @@ class DefaultFormFiled extends StatefulWidget {
     required this.inputType,
     required this.fieldLabel,
     required this.icon,
-    required this.validate,
+    this.validate,
     this.isEnabled = true,
     this.obSecure = false,
     this.suffixIcon,

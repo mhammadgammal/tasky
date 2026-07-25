@@ -1,4 +1,4 @@
-class RegisterDto {
+class RegisterResponse {
   late String name;
   late String yearsOfExperience;
   late String level;
@@ -6,7 +6,7 @@ class RegisterDto {
   late String phoneNumber;
   late String password;
 
-  RegisterDto(
+  RegisterResponse(
       {required this.name,
       required this.yearsOfExperience,
       required this.level,
@@ -14,7 +14,7 @@ class RegisterDto {
       required this.phoneNumber,
       required this.password});
 
-  RegisterDto.fromJson(Map<String, dynamic> json) {
+  RegisterResponse.fromJson(Map<String, dynamic> json) {
     name = json['displayName'];
   }
 

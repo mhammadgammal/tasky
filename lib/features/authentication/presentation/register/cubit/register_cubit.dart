@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
-import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
-import 'package:tasky/features/authentication/data/data_source/register_dto.dart';
+import 'package:tasky/features/authentication/data/model/response/register_response.dart';
 import 'package:tasky/features/authentication/domain/use_case/register_use_case.dart';
 
 part 'register_states.dart';
@@ -42,8 +41,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
     emit(LoginPasswordVisibilityState());
   }
 
-  String? validateAddress(String? value) => null;
-
   String? validatePasswordField(String? value) => value == null || value.isEmpty
       ? 'Password is required'
       : value.length < 6
@@ -58,7 +55,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
     String phoneNumber =
         '+${phoneController.value.countryCode}${phoneController.value.nsn}';
 
-    var apiResponse = await _useCase.perform(RegisterParameter(
+    final result = await _useCase.perform(RegisterParameter(
       nameController.text,
       selectedLevel != null ? selectedLevel!.name : '',
       addressController.text,
@@ -67,12 +64,13 @@ class RegisterCubit extends Cubit<RegisterStates> {
       yearsOfExperienceController.text,
     ));
 
-    if (apiResponse.response != null) {
-      emit(RegisterSuccessState());
-    } else if (apiResponse.error != null) {
-      ApiErrorHandler.handelErrorMessage(apiResponse.error);
-      emit(RegisterFailureState(errorMessage: apiResponse.error.toString()));
-    }
+    result.fold(
+      (failure) => emit(RegisterFailureState(
+        errorMessage:
+            failure.message ?? 'An error occurred, Please try again',
+      )),
+      (_) => emit(RegisterSuccessState()),
+    );
   }
 
   @override

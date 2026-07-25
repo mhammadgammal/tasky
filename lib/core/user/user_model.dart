@@ -11,4 +11,12 @@ class UserModel {
       required this.yearsOfExperience,
       required this.level,
       required this.address});
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        name: json['displayName'],
+        phone: json['username'],
+        yearsOfExperience: json['experienceYears'].toString(),
+        level: json['level'],
+        address: json['address'],
+      );
 }

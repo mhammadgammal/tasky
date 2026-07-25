@@ -12,7 +12,7 @@ import 'package:tasky/features/authentication/presentation/register/cubit/regist
 
 import '../../../../core/router/app_navigator.dart';
 import '../../../../core/theme/app_color.dart';
-import '../../data/data_source/register_dto.dart';
+import '../../data/model/response/register_response.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -128,7 +128,6 @@ class RegisterScreen extends StatelessWidget {
                             inputType: TextInputType.name,
                             fieldLabel: 'Address...',
                             icon: null,
-                            validate: cubit.validateAddress,
                             onSubmit: (_) => FocusScope.of(context)
                                 .requestFocus(cubit.passwordNode),
                           ),
@@ -167,14 +166,14 @@ class RegisterScreen extends StatelessWidget {
                                 )
                               : TaskyButton(
                                   onButtonPressed: () =>
-                                  cubit.formKey.currentState!.validate()
-                                      ? cubit.register()
-                                      : null,
-                              horizontalPadding: 0.0,
-                              content: const Text(
-                                "Sign Up",
-                                style: AppTextStyle.font20whiteBold,
-                              )),
+                                      cubit.formKey.currentState!.validate()
+                                          ? cubit.register()
+                                          : null,
+                                  horizontalPadding: 0.0,
+                                  content: const Text(
+                                    "Sign Up",
+                                    style: AppTextStyle.font20whiteBold,
+                                  )),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
