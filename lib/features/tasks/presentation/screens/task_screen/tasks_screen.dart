@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_color.dart';
 import 'package:tasky/core/widgets/paginatable_list.dart';
+import 'package:tasky/core/widgets/show_toast.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
@@ -30,7 +31,11 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TasksCubit, TasksState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is TaskDeletedFailedState) {
+          showToast(state.message);
+        }
+      },
       builder: (context, state) {
         var cubit = TasksCubit.get(context);
         return Scaffold(

@@ -1,4 +1,4 @@
-class TaskDto {
+class TaskResponse {
   late String taskId;
   late String imagePath;
   late String title;
@@ -9,7 +9,7 @@ class TaskDto {
   late String timeStampCreatedAt;
   late String timeStampUpdatedAt;
 
-  TaskDto(
+  TaskResponse(
       {required this.taskId,
       required this.title,
       required this.description,
@@ -20,7 +20,7 @@ class TaskDto {
       required this.timeStampCreatedAt,
       required this.timeStampUpdatedAt});
 
-  factory TaskDto.fromJson(Map<String, dynamic> json) => TaskDto(
+  factory TaskResponse.fromJson(Map<String, dynamic> json) => TaskResponse(
       taskId: json['_id'],
       title: json['title'],
       description: json['desc'],
