@@ -4,11 +4,11 @@ import 'package:tasky/core/network/dio_helper.dart';
 
 import '../../../../core/di/di.dart';
 
-abstract interface class ProfileApiServiceI {
+abstract interface class ProfileDataSourceI {
   Future<Response> getProfile();
 }
 
-class ProfileApiService implements ProfileApiServiceI {
+class ProfileDataSource implements ProfileDataSourceI {
   @override
   Future<Response> getProfile() async =>
       await sl<DioHelper>().get(ApiEndPoints.profile);

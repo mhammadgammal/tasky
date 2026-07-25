@@ -1,18 +1,21 @@
-import 'package:tasky/features/profile/data/data_source/profile_api_service.dart';
-import 'package:tasky/features/profile/data/model/profile_model.dart';
+import 'package:dartz/dartz.dart' show Either;
+import 'package:tasky/core/network/failures/failure.dart' show Failure;
+import 'package:tasky/core/network/handle_response.dart';
+import 'package:tasky/core/user/user_model.dart';
+import 'package:tasky/features/profile/data/data_source/profile_data_source.dart';
 
 abstract interface class ProfileRepoI {
-  Future<ProfileModel> getProfileData();
+  Future<Either<Failure, UserModel>> getProfileData();
 }
 
 class ProfileRepoImp implements ProfileRepoI {
-  final ProfileApiService _apiService;
+  final ProfileDataSourceI _dataSource;
 
-  ProfileRepoImp(this._apiService);
+  ProfileRepoImp(this._dataSource);
 
   @override
-  Future<ProfileModel> getProfileData() async {
-    var response = await _apiService.getProfile();
-    return ProfileModel.fromJson(response.data);
-  }
+  Future<Either<Failure, UserModel>> getProfileData() => handleResponse(
+        _dataSource.getProfile(),
+        (response) => UserModel.fromJson(response.data),
+      );
 }

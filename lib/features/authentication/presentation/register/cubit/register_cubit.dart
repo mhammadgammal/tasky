@@ -41,8 +41,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
     emit(LoginPasswordVisibilityState());
   }
 
-  String? validateAddress(String? value) => null;
-
   String? validatePasswordField(String? value) => value == null || value.isEmpty
       ? 'Password is required'
       : value.length < 6

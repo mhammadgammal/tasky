@@ -8,7 +8,7 @@ import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/network/dio_helper.dart';
 import 'package:tasky/features/authentication/domain/use_case/login_use_case.dart';
 import 'package:tasky/features/authentication/domain/use_case/register_use_case.dart';
-import 'package:tasky/features/profile/data/data_source/profile_api_service.dart';
+import 'package:tasky/features/profile/data/data_source/profile_data_source.dart';
 import 'package:tasky/features/profile/data/repo/profile_repo.dart';
 import 'package:tasky/features/tasks/data/data_source/network/task_api_service.dart';
 import 'package:tasky/features/tasks/data/repository/tasks_repository_impl.dart';
@@ -69,7 +69,7 @@ Future<void> init() async {
   // #endregion
 
   // #region profile
-  sl.registerLazySingleton<ProfileApiService>(() => ProfileApiService());
+  sl.registerLazySingleton<ProfileDataSourceI>(() => ProfileDataSource());
   sl.registerLazySingleton<ProfileRepoImp>(() => ProfileRepoImp(sl.get()));
   // #endregion
 }

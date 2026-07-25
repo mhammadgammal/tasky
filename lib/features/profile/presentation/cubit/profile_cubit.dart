@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasky/core/user/user_model.dart';
 import 'package:tasky/features/profile/data/repo/profile_repo.dart';
-
-import '../../data/model/profile_model.dart';
 
 part 'profile_state.dart';
 
@@ -10,7 +9,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this._repo) : super(ProfileInitial());
 
   final ProfileRepoImp _repo;
-  ProfileModel? profile;
+  UserModel? profile;
   List<String> fields = [
     'NAME',
     'PHONE',
@@ -29,18 +28,22 @@ class ProfileCubit extends Cubit<ProfileState> {
       profile!.name,
       profile!.phone,
       profile!.level,
-      profile!.experience.toString(),
+      profile!.yearsOfExperience,
       profile!.address
     ];
   }
 
   Future<void> getProfile() async {
     emit(ProfileDataLoadingState());
-    try {
-      profile = await _repo.getProfileData();
-      emit(ProfileDataLoadSuccessState());
-    } catch (e) {
-      emit(ProfileDataLoadFailState());
-    }
+    final result = await _repo.getProfileData();
+    result.fold(
+      (failure) => emit(ProfileDataLoadFailState(
+        message: failure.message ?? 'Getting data failed, try again later',
+      )),
+      (userModel) {
+        profile = userModel;
+        emit(ProfileDataLoadSuccessState());
+      },
+    );
   }
 }

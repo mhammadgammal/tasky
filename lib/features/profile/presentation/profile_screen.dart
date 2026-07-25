@@ -15,8 +15,8 @@ class ProfileScreen extends StatelessWidget {
         if (state is ProfileDataLoadFailState) {
           showDialog(
               context: context,
-              builder: (context) => const AuthErrorDialogue(
-                  errorMessage: 'Getting data failed, try again later'));
+              builder: (context) =>
+                  AuthErrorDialogue(errorMessage: state.message));
         }
       },
       builder: (context, state) {
@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
-                  padding: EdgeInsetsDirectional.all(15.0),
+                  padding: const EdgeInsetsDirectional.all(15.0),
                   itemCount: cubit.getUserProfileFields().length,
                   itemBuilder: (context, index) => Card(
                         elevation: 0.0,
@@ -46,11 +46,11 @@ class ProfileScreen extends StatelessWidget {
                         child: ListTile(
                             title: Text(
                               cubit.fields[index],
-                              style: TextStyle(color: AppColor.lightGrey),
+                              style: const TextStyle(color: AppColor.lightGrey),
                             ),
                             subtitle: Text(
                               cubit.getUserProfileFields()[index],
-                              style: TextStyle(color: AppColor.solidGrey),
+                              style: const TextStyle(color: AppColor.solidGrey),
                             ),
                             trailing: index == 1
                                 ? IconButton(
