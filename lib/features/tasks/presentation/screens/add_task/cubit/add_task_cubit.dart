@@ -32,7 +32,6 @@ class AddTaskCubit extends Cubit<AddTaskState> {
 
   void onPriorityChanged(value) {
     selectedPriority = value;
-    print(selectedPriority);
     emit(PriorityChangedState());
   }
 

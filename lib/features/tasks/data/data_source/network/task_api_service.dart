@@ -23,7 +23,6 @@ class TaskApiService implements TaskApiServiceI {
   @override
   Future<Response> addTask(TaskDto task) {
     var taskData = task.toJsonAdd();
-    print('taskData: $taskData');
     return sl<DioHelper>().post(ApiEndPoints.todos, data: taskData);
   }
 

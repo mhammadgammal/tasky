@@ -14,8 +14,6 @@ class TaskDetailsScreen extends StatelessWidget {
     return BlocConsumer<TaskDetailsCubit, TaskDetailsState>(
       listener: (context, state) {
         if (state is TaskUpdateSuccessState) {
-          print(
-              'cubit.task.status: ${TaskDetailsCubit.get(context).task.status}');
           Navigator.pop(context, TaskDetailsCubit.get(context).task);
         }
         if (state is TaskDeletedSuccessfullyState) {

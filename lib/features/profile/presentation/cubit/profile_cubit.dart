@@ -40,7 +40,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       profile = await _repo.getProfileData();
       emit(ProfileDataLoadSuccessState());
     } catch (e) {
-      print('error getting profile data due to: $e');
       emit(ProfileDataLoadFailState());
     }
   }

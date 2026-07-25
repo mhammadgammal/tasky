@@ -32,14 +32,11 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(LoginLoadingState());
     String phoneNumber =
         '+${phoneController.value.countryCode}${phoneController.value.nsn}';
-    print(phoneNumber);
     var apiResponse = await _loginUseCase
         .perform(LoginParameter(phoneNumber, passwordController.text));
-    print(apiResponse.error);
     if (apiResponse.response != null) {
       emit(LoginSuccessState());
     } else if (apiResponse.error != null) {
-      print(apiResponse.error);
       String errorMessage = 'An error occurred, Please try again';
       if (apiResponse.error.response?.statusCode == 401) {
         errorMessage = 'Wrong email or password';
@@ -64,13 +61,5 @@ class LoginCubit extends Cubit<LoginStates> {
     phoneController.dispose();
     passwordController.dispose();
     return super.close();
-  }
-
-  void onSubmit(String p1) {
-    print('on submit');
-  }
-
-  void onSave(PhoneNumber? p1) {
-    print('on save');
   }
 }

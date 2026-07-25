@@ -63,9 +63,6 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
     var response =
         await _updateTaskUseCase.perform(TaskInstanceParameter(task));
     response.fold((_) {
-      print('task.status: ${task.status}');
-      print('task.priority: ${task.priority}');
-
       emit(TaskUpdateSuccessState());
     }, (e) {
       emit(TaskUpdateFailureState(ApiErrorHandler.handelErrorMessage(e)));

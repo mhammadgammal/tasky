@@ -155,12 +155,3 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 }
-
-// TaskyButton(
-// onButtonPressed: () {
-// sl<AuthenticationRepoImpl>().logout().then((value) =>
-// AppNavigator.navigateAndFinishToLogin(context))
-//     .catchError((error) =>
-// print('error logging out: ${error}'));
-// },
-// content: Text('Logout')),

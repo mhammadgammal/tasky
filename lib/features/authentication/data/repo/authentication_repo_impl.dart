@@ -19,19 +19,6 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
   Future<ApiResponse> login(String phone, String password) async {
     try {
       var response = await _apiSevice.login(phone, password);
-      log('AuthenticationRepoImpl: login Response ==> ${response.data}');
-      var isAccessToken = await sl<CacheHelper>().putString(
-          key: CacheKeys.token, value: response.data['access_token']) ??
-          false;
-      log('AuthenticationRepoImpl: isAccessToken ==> $isAccessToken');
-      print('AuthenticationRepoImpl: access token from sh: ${sl<CacheHelper>()
-          .getString(key: CacheKeys.token)}');
-
-      var isRefreshToken = await sl<CacheHelper>().putString(
-          key: CacheKeys.refreshToken,
-          value: response.data['refresh_token']) ??
-          false;
-      log('AuthenticationRepoImpl: isRefreshToken ==> $isRefreshToken');
 
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
@@ -46,12 +33,8 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
   Future<ApiResponse> register(RegisterDto registerDto) async {
     try {
       var response = await _apiSevice.register(registerDto);
-      print(response.data);
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
-          'Error registering with code ${e.response?.statusCode!
-              .toString()}: ${e.message}');
       return ApiResponse.withError(e.response?.statusCode!);
     }
   }

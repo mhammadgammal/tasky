@@ -31,8 +31,6 @@ class TasksRepositoryImpl implements TasksRepository {
       var response = await _apiService.addTask(taskDto);
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
-          'Error adding task with code ${e.response?.statusCode}: ${e.message}');
       return ApiResponse.withError(e.response?.statusCode);
     }
   }
@@ -43,8 +41,6 @@ class TasksRepositoryImpl implements TasksRepository {
       var response = await _apiService.deleteTask(taskId);
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
-          'Error deleting task with code ${e.response?.statusCode}: ${e.message}');
       return ApiResponse.withError(e.response?.statusCode);
     }
   }
@@ -65,8 +61,6 @@ class TasksRepositoryImpl implements TasksRepository {
       var response = await _apiService.editTask(taskDto);
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
-          'Error updating task with code ${e.response?.statusCode}: ${e.message}');
       return ApiResponse.withError(e.response?.statusCode);
     }
   }
@@ -75,11 +69,8 @@ class TasksRepositoryImpl implements TasksRepository {
   Future<ApiResponse> getAllTasks(int pageNumber) async {
     try {
       var response = await _apiService.getAllTasks(pageNumber);
-      print('all tasks response: ${response.data}');
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
-          'Error updating task with code ${e.response?.statusCode}: ${e.message}');
       return ApiResponse.withError(e.response?.statusCode);
     }
   }
@@ -90,8 +81,6 @@ class TasksRepositoryImpl implements TasksRepository {
       var response = await _apiService.getTask(taskId);
       return ApiResponse.withSuccess(response);
     } on DioException catch (e) {
-      print(
-          'Error updating task with code ${e.response?.statusCode}: ${e.message}');
       return ApiResponse.withError(e.response?.statusCode);
     }
   }
@@ -104,8 +93,6 @@ class TasksRepositoryImpl implements TasksRepository {
       filename: fileName,
       contentType: DioMediaType.parse('image/*'),
     );
-    print('multiPart.contentType: ${multiPart.contentType}');
-    print(fileName);
     formData.files.add(
       MapEntry("image", multiPart),
     );

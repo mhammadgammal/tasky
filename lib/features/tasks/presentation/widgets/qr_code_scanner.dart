@@ -57,13 +57,11 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
       setState(() {
         result = scanData;
         Navigator.pop(context, scanData.code);
-        print('result: ${scanData.code}');
       });
     });
   }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    print('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('no Permission')),

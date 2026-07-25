@@ -19,7 +19,6 @@ class TaskyApp extends StatelessWidget {
         sl<CacheHelper>().getString(key: CacheKeys.refreshToken);
     bool firstTime =
         sl<CacheHelper>().getBool(key: CacheKeys.firstTime) ?? true;
-    print('firstTime: $firstTime');
     return ValueListenableBuilder<String>(
       valueListenable: LocalizeConstants.currentLanguageNotifier,
       builder: (context, languageCode, child) {
