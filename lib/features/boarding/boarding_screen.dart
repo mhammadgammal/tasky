@@ -42,7 +42,7 @@ class BoardingScreen extends StatelessWidget {
         TaskyButton(
             onButtonPressed: () {
               sl<CacheHelper>().putBool(CacheKeys.firstTime, false);
-              AppNavigator.navigateAndFinishToLogin(context);
+              AppNavigator.navigateAndFinishToLogin();
             },
             content: const Row(
               mainAxisAlignment: MainAxisAlignment.center,

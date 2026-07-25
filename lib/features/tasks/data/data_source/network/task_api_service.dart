@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:tasky/core/utils/api_utils/api_end_points.dart';
-import 'package:tasky/core/utils/api_utils/dio_helper.dart';
+import 'package:tasky/core/network/api_end_points.dart';
+import 'package:tasky/core/network/dio_helper.dart';
 
 import '../../../../../core/di/di.dart';
 import '../dto/task_dto.dart';
@@ -24,29 +24,29 @@ class TaskApiService implements TaskApiServiceI {
   Future<Response> addTask(TaskDto task) {
     var taskData = task.toJsonAdd();
     print('taskData: $taskData');
-    return sl<DioHelper>().post(url: ApiEndPoints.todos, data: taskData);
+    return sl<DioHelper>().post(ApiEndPoints.todos, data: taskData);
   }
 
   @override
   Future<Response> deleteTask(String taskId) =>
-      sl<DioHelper>().delete(url: '${ApiEndPoints.todos}/$taskId');
+      sl<DioHelper>().delete('${ApiEndPoints.todos}/$taskId');
 
   @override
   Future<Response> editTask(TaskDto task) => sl<DioHelper>().put(
-      url: '${ApiEndPoints.todos}/${task.taskId}', data: task.toJsonEdit());
+      '${ApiEndPoints.todos}/${task.taskId}', data: task.toJsonEdit());
 
   @override
   Future<Response> getAllTasks(int pageNumber) =>
-      sl<DioHelper>().get(url: '${ApiEndPoints.todos}?page=$pageNumber');
+      sl<DioHelper>().get('${ApiEndPoints.todos}?page=$pageNumber');
 
   @override
   Future<Response> getTask(String taskId) =>
-      sl<DioHelper>().get(url: '${ApiEndPoints.todos}/$taskId');
+      sl<DioHelper>().get('${ApiEndPoints.todos}/$taskId');
 
   @override
   Future<Response> uploadImage(FormData formData) =>
       sl<DioHelper>().postWithFormData(
-        url: ApiEndPoints.uploadImage,
+        ApiEndPoints.uploadImage,
         data: formData,
       );
 }

@@ -22,7 +22,7 @@ class SessionEndedDialogue extends StatelessWidget {
       ),
       actions: [
         TextButton(
-            onPressed: () => AppNavigator.navigateAndFinishToLogin(context),
+            onPressed: () => AppNavigator.navigateAndFinishToLogin(),
             child: const Text(
               'Sign In',
               style: TextStyle(color: AppColor.mainColor, fontSize: 15),

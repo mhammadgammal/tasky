@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
 import 'package:tasky/core/cache/cache_keys.dart';
 import 'package:tasky/core/utils/api_utils/api_response.dart';
-import 'package:tasky/core/utils/api_utils/token_util.dart';
+import 'package:tasky/core/network/token_util.dart';
 import 'package:tasky/features/authentication/data/data_source/register_dto.dart';
 import 'package:tasky/features/authentication/data/network/authentication_api_sevice.dart';
 

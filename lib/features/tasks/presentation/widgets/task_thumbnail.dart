@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/core/utils/api_utils/api_end_points.dart';
+import 'package:tasky/core/network/api_end_points.dart';
 
 class TaskThumbnail extends StatelessWidget {
   const TaskThumbnail(

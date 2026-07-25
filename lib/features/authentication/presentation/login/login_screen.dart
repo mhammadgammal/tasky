@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          AppNavigator.navigateToTasks(context);
+          AppNavigator.navigateToTasks();
         } else if (state is LoginFailureState) {
           showDialog(
               context: sl<AppContext>().navigatorContext,
@@ -114,8 +114,7 @@ class LoginScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.grey, fontSize: 17.0),
                       ),
                       TextButton(
-                          onPressed: () =>
-                              AppNavigator.navigateToRegister(context),
+                          onPressed: () => AppNavigator.navigateToRegister(),
                           child: const Text('Sign Up here'))
                     ],
                   )

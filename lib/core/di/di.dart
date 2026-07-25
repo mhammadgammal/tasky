@@ -1,9 +1,11 @@
+import 'dart:developer' show log;
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky/app_context.dart';
 import 'package:tasky/core/cache/cache_helper.dart';
-import 'package:tasky/core/utils/api_utils/dio_helper.dart';
+import 'package:tasky/core/network/dio_helper.dart';
 import 'package:tasky/features/authentication/domain/use_case/login_use_case.dart';
 import 'package:tasky/features/authentication/domain/use_case/register_use_case.dart';
 import 'package:tasky/features/profile/data/data_source/profile_api_service.dart';
@@ -22,7 +24,7 @@ import '../../features/tasks/domain/use_case/add_task_use_case.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  print('Service Locator is Running');
+  log('Service Locator is Running');
 
   sl.registerLazySingleton<AppContext>(() => AppContext());
   // #region SharedPreferences

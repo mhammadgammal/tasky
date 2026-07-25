@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/core/router/router_helper.dart';
 
-class AppNavigator {
-  static Future<dynamic> navigateAndFinishToLogin(context) =>
-      Navigator.popAndPushNamed(context, RouterHelper.login);
+abstract class AppNavigator {
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
-  static Future<dynamic> navigateToLogin(context) =>
-      Navigator.pushNamed(context, RouterHelper.login);
+  static Future<dynamic> navigateAndFinishToLogin() =>
+      Navigator.popAndPushNamed(
+          navigatorKey.currentContext!, RouterHelper.login);
 
-  static Future<dynamic> navigateToRegister(BuildContext context) =>
-      Navigator.pushNamed(context, RouterHelper.register);
+  static Future<dynamic> navigateToLogin() =>
+      Navigator.pushNamed(navigatorKey.currentContext!, RouterHelper.login);
 
-  static Future<void> navigateToTasks(BuildContext context) =>
-      Navigator.pushNamedAndRemoveUntil(context, RouterHelper.home,
-          ModalRoute.withName(RouterHelper.boarding));
+  static Future<dynamic> navigateToRegister() => Navigator.pushNamed(
+      navigatorKey.currentContext!, RouterHelper.register);
 
-  static Future<dynamic> navigateToAddTask(BuildContext context) =>
-      Navigator.pushNamed(context, RouterHelper.addTask);
+  static Future<void> navigateToTasks() =>
+      Navigator.pushNamedAndRemoveUntil(navigatorKey.currentContext!,
+          RouterHelper.home, ModalRoute.withName(RouterHelper.boarding));
 
-  static Future<dynamic> navigateToTaskDetails(
-          BuildContext context, String taskId) =>
-      Navigator.pushNamed(context, RouterHelper.taskDetails, arguments: taskId);
+  static Future<dynamic> navigateToAddTask() => Navigator.pushNamed(
+      navigatorKey.currentContext!, RouterHelper.addTask);
 
-  static Future<dynamic> navigateToQrCode(BuildContext context) =>
-      Navigator.pushNamed(context, RouterHelper.qrCodeScanner);
+  static Future<dynamic> navigateToTaskDetails(String taskId) =>
+      Navigator.pushNamed(navigatorKey.currentContext!,
+          RouterHelper.taskDetails,
+          arguments: taskId);
 
-  static Future<dynamic> navigateToProfile(context) =>
-      Navigator.pushNamed(context, RouterHelper.profile);
+  static Future<dynamic> navigateToQrCode() => Navigator.pushNamed(
+      navigatorKey.currentContext!, RouterHelper.qrCodeScanner);
+
+  static Future<dynamic> navigateToProfile() => Navigator.pushNamed(
+      navigatorKey.currentContext!, RouterHelper.profile);
 }

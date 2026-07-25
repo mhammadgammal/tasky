@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/router/app_navigator.dart';
 import 'package:tasky/core/theme/app_color.dart';
+import 'package:tasky/core/widgets/paginatable_list.dart';
 import 'package:tasky/features/authentication/data/repo/authentication_repo_impl.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/presentation/screens/task_screen/cubit/tasks_cubit.dart';
@@ -10,8 +11,21 @@ import 'package:tasky/features/tasks/presentation/widgets/tasks_selection_chips.
 
 import '../../../../../core/di/di.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  late final PaginatableListController _paginatableListController;
+
+  @override
+  void initState() {
+    super.initState();
+    _paginatableListController = PaginatableListController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +41,7 @@ class TasksScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  onPressed: () => AppNavigator.navigateToProfile(context),
+                  onPressed: () => AppNavigator.navigateToProfile(),
                   icon: const Icon(
                     Icons.person_2_outlined,
                     color: Colors.black,
@@ -36,7 +50,7 @@ class TasksScreen extends StatelessWidget {
                 onPressed: () =>
                     sl<AuthenticationRepoImpl>().logout().then((value) {
                   if (value) {
-                    AppNavigator.navigateAndFinishToLogin(context);
+                    AppNavigator.navigateAndFinishToLogin();
                   }
                 }),
                 icon: const Icon(
@@ -61,18 +75,24 @@ class TasksScreen extends StatelessWidget {
                 TasksSelectionChips(
                     chipsItems: cubit.taskTypeItems,
                     selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
-                    onChipPressed: cubit.onTaskTypeSelected),
+                    onChipPressed: (isSelected, index) {
+                      cubit.onTaskTypeSelected(isSelected, index);
+                      _paginatableListController.refresh();
+                    }),
                 Expanded(
                   child: TasksLayout(
-                      selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
-                      pagingController: cubit.pageController,
-                      selectedItems: cubit.getSelectedItems(),
-                      onTaskTypeSelected: cubit.onTaskTypeSelected,
-                      deleteTask: cubit.deleteTask,
-                      updateToTasksList: cubit.updateToTasksList,
-                      addToTasksList: cubit.addToTasksList,
-                      fetchAllTasks: (pageNumber, isRefresh) => cubit
-                          .fetchAllTasks(pageNumber, isRefreshing: isRefresh)),
+                    selectedTaskTypeIndex: cubit.selectedTaskTypeIndex,
+                    controller: _paginatableListController,
+                    pageLoader: cubit.fetchTasksPage,
+                    deleteTask: (taskId) async {
+                      await cubit.deleteTask(taskId);
+                      _paginatableListController.refresh();
+                    },
+                    updateToTasksList: (task) {
+                      cubit.updateToTasksList(task);
+                      _paginatableListController.refresh();
+                    },
+                  ),
                 ),
               ],
             ),
@@ -91,9 +111,9 @@ class TasksScreen extends StatelessWidget {
                       key: UniqueKey(),
                       onPressed: () {
                         /* Action 1 */
-                        AppNavigator.navigateToQrCode(context).then((value) {
+                        AppNavigator.navigateToQrCode().then((value) {
                           if (value is String) {
-                            AppNavigator.navigateToTaskDetails(context, value);
+                            AppNavigator.navigateToTaskDetails(value);
                           }
                         });
                       },
@@ -113,9 +133,10 @@ class TasksScreen extends StatelessWidget {
                       key: UniqueKey(),
                       shape: const CircleBorder(eccentricity: 1.0),
                       onPressed: () =>
-                          AppNavigator.navigateToAddTask(context).then((value) {
+                          AppNavigator.navigateToAddTask().then((value) {
                         if (value is TaskModel) {
                           cubit.addToTasksList(value);
+                          _paginatableListController.refresh();
                         }
                       }),
                       elevation: 20.0,
