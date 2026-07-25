@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
-import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 import 'package:tasky/features/tasks/domain/use_case/delete_task_use_case.dart';
 import 'package:tasky/features/tasks/domain/use_case/get_task.dart';
@@ -30,14 +29,16 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
   Future<void> getTask(String taskId) async {
     emit(TaskDetailLoadingState());
     var response = await _getTaskUseCase.perform(TaskIdParameter(taskId));
-    response.fold((task) {
+    response.fold((failure) {
+      emit(TaskLoadFailureState(
+        message: failure.message ?? 'Failed to load task',
+      ));
+    }, (task) {
       this.task = task;
       selectedStatus = task.status;
       selectedPriority = task.priority;
 
       emit(TaskLoadSuccessState());
-    }, (error) {
-      emit(TaskLoadFailureState());
     });
   }
 
@@ -62,19 +63,21 @@ class TaskDetailsCubit extends Cubit<TaskDetailsState> {
     task.status = selectedStatus!;
     var response =
         await _updateTaskUseCase.perform(TaskInstanceParameter(task));
-    response.fold((_) {
+    response.fold((failure) {
+      emit(TaskUpdateFailureState(failure.message ?? 'Failed to update task'));
+    }, (_) {
       emit(TaskUpdateSuccessState());
-    }, (e) {
-      emit(TaskUpdateFailureState(ApiErrorHandler.handelErrorMessage(e)));
     });
   }
 
     Future<void> deleteTask(String taskId) async {
     var result = await _deleteTaskUseCase.perform(TaskIdParameter(taskId));
-    result.fold((_) {
+    result.fold((failure) {
+      emit(TaskDeletedFailedState(
+        message: failure.message ?? 'Failed to delete task',
+      ));
+    }, (_) {
       emit(TaskDeletedSuccessfullyState());
-    }, (error) {
-      emit(TaskDeletedFailedState());
     });
   }
 }

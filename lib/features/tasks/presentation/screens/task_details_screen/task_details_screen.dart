@@ -19,6 +19,15 @@ class TaskDetailsScreen extends StatelessWidget {
         if (state is TaskDeletedSuccessfullyState) {
           Navigator.pop(context, TaskDetailsCubit.get(context).task.taskId);
         }
+        if (state is TaskLoadFailureState) {
+          showToast(state.message);
+        }
+        if (state is TaskUpdateFailureState) {
+          showToast(state.e);
+        }
+        if (state is TaskDeletedFailedState) {
+          showToast(state.message);
+        }
       },
       builder: (context, state) {
         var cubit = TaskDetailsCubit.get(context);

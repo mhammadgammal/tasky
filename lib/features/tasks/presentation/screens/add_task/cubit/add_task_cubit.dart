@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tasky/core/base_use_case/base_parameter.dart';
-import 'package:tasky/core/utils/api_utils/api_error_handler.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 
 import '../../../../domain/use_case/add_task_use_case.dart';
@@ -51,14 +50,13 @@ class AddTaskCubit extends Cubit<AddTaskState> {
         userId: '-1',
         timeStampCreatedAt: 'timeStampCreatedAt',
         timeStampUpdatedAt: 'timeStampUpdatedAt')));
-    result.fold((task) async {
+    result.fold((failure) {
+      emit(TaskAddFailedState(failure.message ?? 'Failed to add task'));
+    }, (task) async {
       this.task = task;
       bool isExist = await File(task.imagePath).exists();
       this.task.isImageExist = isExist;
       emit(TaskAddedSuccessState());
-    }, (error) {
-      var errorMessage = ApiErrorHandler.handelErrorMessage(error);
-      emit(TaskAddFailedState(errorMessage));
     });
   }
 

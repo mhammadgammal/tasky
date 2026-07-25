@@ -13,7 +13,11 @@ final class TasksListUpdatedState extends TasksState {}
 
 final class TasksLoadSuccessState extends TasksState {}
 
-final class TaskDeletedFailedState extends TasksState {}
+final class TaskDeletedFailedState extends TasksState {
+  final String message;
+
+  TaskDeletedFailedState({required this.message});
+}
 
 final class TaskDeletedSuccessfullyState extends TasksState {}
 

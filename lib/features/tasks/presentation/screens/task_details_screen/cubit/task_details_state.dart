@@ -9,7 +9,11 @@ final class TaskDetailLoadingState extends TaskDetailsState {}
 
 final class TaskLoadSuccessState extends TaskDetailsState {}
 
-final class TaskLoadFailureState extends TaskDetailsState {}
+final class TaskLoadFailureState extends TaskDetailsState {
+  final String message;
+
+  TaskLoadFailureState({required this.message});
+}
 
 final class StatusChangedState extends TaskDetailsState {}
 
@@ -19,7 +23,11 @@ final class TaskUpdateSuccessState extends TaskDetailsState {}
 
 final class TaskDeletedSuccessfullyState extends TaskDetailsState {}
 
-final class TaskDeletedFailedState extends TaskDetailsState {}
+final class TaskDeletedFailedState extends TaskDetailsState {
+  final String message;
+
+  TaskDeletedFailedState({required this.message});
+}
 
 final class TaskUpdateFailureState extends TaskDetailsState {
   final String e;

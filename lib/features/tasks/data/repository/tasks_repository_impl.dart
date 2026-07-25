@@ -1,7 +1,9 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:tasky/core/utils/api_utils/api_response.dart';
-import 'package:tasky/features/tasks/data/data_source/dto/task_dto.dart';
+import 'package:tasky/core/network/failures/failure.dart';
+import 'package:tasky/core/network/handle_response.dart';
 import 'package:tasky/features/tasks/data/data_source/network/task_api_service.dart';
+import 'package:tasky/features/tasks/data/model/response/task_response.dart';
 import 'package:tasky/features/tasks/domain/entity/task_model.dart';
 
 import '../../domain/repository/tasks_repository.dart';
@@ -12,77 +14,57 @@ class TasksRepositoryImpl implements TasksRepository {
   TasksRepositoryImpl(this._apiService);
 
   @override
-  Future<ApiResponse> addTask(TaskModel task) async {
-    TaskDto taskDto = TaskDto(
-        taskId: task.taskId,
-        title: task.title,
-        description: task.description,
-        imagePath: task.imagePath,
-        priority: task.priority,
-        status: task.status,
-        userId: task.userId,
-        timeStampCreatedAt: task.timeStampCreatedAt,
-        timeStampUpdatedAt: task.timeStampUpdatedAt);
-    try {
-      if (taskDto.imagePath.isNotEmpty) {
-        var image = await _uploadImage(taskDto.imagePath);
-        taskDto.imagePath = image;
-      }
-      var response = await _apiService.addTask(taskDto);
-      return ApiResponse.withSuccess(response);
-    } on DioException catch (e) {
-      return ApiResponse.withError(e.response?.statusCode);
-    }
-  }
+  Future<Either<Failure, TaskModel>> addTask(TaskModel task) =>
+      handleResponse(
+        _sendWithImage(_toTaskResponse(task), _apiService.addTask),
+        (response) => TaskModel.fromJson(response.data),
+      );
 
   @override
-  Future<ApiResponse> deleteTask(String taskId) async {
-    try {
-      var response = await _apiService.deleteTask(taskId);
-      return ApiResponse.withSuccess(response);
-    } on DioException catch (e) {
-      return ApiResponse.withError(e.response?.statusCode);
-    }
-  }
+  Future<Either<Failure, TaskModel>> editTask(TaskModel task) =>
+      handleResponse(
+        _sendWithImage(_toTaskResponse(task), _apiService.editTask),
+        (response) => TaskModel.fromJson(response.data),
+      );
 
   @override
-  Future<ApiResponse> editTask(TaskModel task) async {
-    TaskDto taskDto = TaskDto(
-        taskId: task.taskId,
-        title: task.title,
-        description: task.description,
-        imagePath: task.imagePath,
-        priority: task.priority,
-        status: task.status,
-        userId: task.userId,
-        timeStampCreatedAt: task.timeStampCreatedAt,
-        timeStampUpdatedAt: task.timeStampUpdatedAt);
-    try {
-      var response = await _apiService.editTask(taskDto);
-      return ApiResponse.withSuccess(response);
-    } on DioException catch (e) {
-      return ApiResponse.withError(e.response?.statusCode);
-    }
-  }
+  Future<Either<Failure, Unit>> deleteTask(String taskId) => handleResponse(
+        _apiService.deleteTask(taskId),
+        (response) => unit,
+      );
 
   @override
-  Future<ApiResponse> getAllTasks(int pageNumber) async {
-    try {
-      var response = await _apiService.getAllTasks(pageNumber);
-      return ApiResponse.withSuccess(response);
-    } on DioException catch (e) {
-      return ApiResponse.withError(e.response?.statusCode);
-    }
-  }
+  Future<Either<Failure, List<TaskModel>>> getAllTasks(int pageNumber) =>
+      handleResponse(
+        _apiService.getAllTasks(pageNumber),
+        (response) => List<TaskModel>.from(
+          response.data.map((task) => TaskModel.fromJson(task)),
+        ),
+      );
 
   @override
-  Future<ApiResponse> getTask(String taskId) async {
-    try {
-      var response = await _apiService.getTask(taskId);
-      return ApiResponse.withSuccess(response);
-    } on DioException catch (e) {
-      return ApiResponse.withError(e.response?.statusCode);
+  Future<Either<Failure, TaskModel>> getTask(String taskId) => handleResponse(
+        _apiService.getTask(taskId),
+        (response) => TaskModel.fromJson(response.data),
+      );
+
+  TaskResponse _toTaskResponse(TaskModel task) => TaskResponse(
+      taskId: task.taskId,
+      title: task.title,
+      description: task.description,
+      imagePath: task.imagePath,
+      priority: task.priority,
+      status: task.status,
+      userId: task.userId,
+      timeStampCreatedAt: task.timeStampCreatedAt,
+      timeStampUpdatedAt: task.timeStampUpdatedAt);
+
+  Future<Response> _sendWithImage(TaskResponse taskResponse,
+      Future<Response> Function(TaskResponse) send) async {
+    if (taskResponse.imagePath.isNotEmpty) {
+      taskResponse.imagePath = await _uploadImage(taskResponse.imagePath);
     }
+    return send(taskResponse);
   }
 
   Future<String> _uploadImage(String imagePath) async {

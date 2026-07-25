@@ -3,16 +3,16 @@ import 'package:tasky/core/network/api_end_points.dart';
 import 'package:tasky/core/network/dio_helper.dart';
 
 import '../../../../../core/di/di.dart';
-import '../dto/task_dto.dart';
+import '../../model/response/task_response.dart';
 
 abstract interface class TaskApiServiceI {
   Future<Response> getAllTasks(int pageNumber);
 
   Future<Response> getTask(String taskId);
 
-  Future<Response> addTask(TaskDto task);
+  Future<Response> addTask(TaskResponse task);
 
-  Future<Response> editTask(TaskDto task);
+  Future<Response> editTask(TaskResponse task);
 
   Future<Response> deleteTask(String taskId);
 
@@ -21,7 +21,7 @@ abstract interface class TaskApiServiceI {
 
 class TaskApiService implements TaskApiServiceI {
   @override
-  Future<Response> addTask(TaskDto task) {
+  Future<Response> addTask(TaskResponse task) {
     var taskData = task.toJsonAdd();
     return sl<DioHelper>().post(ApiEndPoints.todos, data: taskData);
   }
@@ -31,7 +31,7 @@ class TaskApiService implements TaskApiServiceI {
       sl<DioHelper>().delete('${ApiEndPoints.todos}/$taskId');
 
   @override
-  Future<Response> editTask(TaskDto task) => sl<DioHelper>().put(
+  Future<Response> editTask(TaskResponse task) => sl<DioHelper>().put(
       '${ApiEndPoints.todos}/${task.taskId}', data: task.toJsonEdit());
 
   @override
